@@ -6,7 +6,6 @@ import { Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { StorageService } from "./StorageService";
-import { UserInfoData } from "./../model/UserInfoData";
 
 @Injectable()
 export class HttpService {
@@ -19,7 +18,7 @@ export class HttpService {
     }
 
     public httpGetWithAuth(url: string) {
-        let user = this.storageService.read<UserInfoData>('UserInfo');
+        let user = this.storageService.read<any>('UserInfo');
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', user.ID + '-' + user.UserToken);
