@@ -10,21 +10,7 @@
 <ion-content padding>
   <ion-list>
 
-    <ion-item navPush="Chat" [navParams]="lqh">
-      <ion-avatar item-left>
-        <img src="../../assets/imgs/to-user.jpg">
-      </ion-avatar>
-      <h2>lqh</h2>
-      <p>If at first you don’t succeed, call it version 1.0</p>
-    </ion-item>
-
-    <ion-item navPush="Chat" [navParams]="wh">
-      <ion-avatar item-left>
-        <img src="../../assets/imgs/to-user.jpg">
-      </ion-avatar>
-      <h2>wh</h2>
-      <p>If at first you don’t succeed, call it version 1.0</p>
-    </ion-item>
+    
   </ion-list>
 </ion-content>
 
@@ -37,7 +23,7 @@
               </button>
       </ion-col>
       <ion-col col-8>
-        <ion-textarea #chat_input placeholder="" [(ngModel)]="editorMsg" (keyup.enter)="ask()" (focus)="onFocus()">
+        <ion-textarea style="border:1px" #chat_input placeholder="" [(ngModel)]="editorMsg" (keyup.enter)="ask()" (focus)="onFocus()">
         </ion-textarea>
       </ion-col>
       <ion-col col-2>

@@ -14,7 +14,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'find.html',
 })
 export class FindPage {
-
+  search;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 

@@ -14,41 +14,49 @@
 
 
 <ion-content padding>
-  <div class="content has-header ionic-pseudo">
-    
-          <div class="list">
-    
-            <a class="item item-thumbnail-left" href="#">
-              <img src="../../assets/imgs/to-user.jpg">
-              <h2>Weezer</h2>
-              <p>Blue Album</p>
-            </a>
-    
-            <a class="item item-thumbnail-left" href="#">
-              <img src="../../assets/imgs/to-user.jpg">
-              <h2>Smashing Pumpkins</h2>
-              <p>Siamese Dream</p>
-            </a>
-    
-            <a class="item item-thumbnail-left" href="#">
-              <img src="../../assets/imgs/to-user.jpg">
-              <h2>Nirvana</h2>
-              <p>Nevermind</p>
-            </a>
-    
-            <a class="item item-thumbnail-left" href="#">
-              <img src="../../assets/imgs/to-user.jpg">
-              <h2>Beastie Boys</h2>
-              <p>License To Ill</p>
-            </a>
-    
-            <a class="item item-thumbnail-left" href="#">
-              <img src="../../assets/imgs/to-user.jpg">
-              <h2>Green Day</h2>
-              <p>Dookie</p>
-            </a>
-    
-          </div>
-    
-        </div>
+  <ion-searchbar placeholder="搜索您的问题" [(ngModel)]="search" [showCancelButton]=false (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
+  </ion-searchbar>
+  <ion-grid text-center class="kind">
+    <ion-row>
+      <ion-col>
+        学习
+      </ion-col>
+      <ion-col>
+        互联网
+      </ion-col>
+      <ion-col>
+        职场
+      </ion-col>
+      <ion-col>
+        创业
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        健康
+      </ion-col>
+      <ion-col>
+        情感
+      </ion-col>
+      <ion-col>
+        法律
+      </ion-col>
+      <ion-col>
+        心理
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card>
+
+    <ion-card-header>
+      常见问题
+    </ion-card-header>
+
+    <ion-card-content>
+      <!-- Add card content here! -->
+    </ion-card-content>
+
+  </ion-card>
+
 </ion-content>

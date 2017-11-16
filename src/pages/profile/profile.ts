@@ -22,4 +22,9 @@ export class ProfilePage {
     console.log('ionViewDidLoad ProfilePage');
   }
 
+  answer() { }
+  clearCache() { }
+  help() { }
+  seetings() { }
+  about() { }
 }

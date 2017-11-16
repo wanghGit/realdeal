@@ -15,31 +15,34 @@
 
 <ion-content>
   <ion-list>
-      <ion-item navPush="LoginPage" >
-          <ion-avatar>
-            <img src="../../assets/imgs/to-user.jpg">
-          </ion-avatar>
-          <p>登录</p>
-        </ion-item>
-    <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
+    <ion-item navPush="LoginPage">
+      <ion-avatar>
+        <img src="../../assets/imgs/to-user.jpg">
+      </ion-avatar>
+      <p>登录</p>
+    </ion-item>
+    <button ion-item>
       我的答主页
     </button>
-    <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
-      我答
+    <button ion-item (click)="answer()">
+      我的回答
     </button>
-    <button ion-item (click)="itemSelected(item)">
-      我的分币
+    <button ion-item>
+      我的分币 100
     </button>
-    <button ion-item (click)="itemSelected(item)">
+    <button ion-item (click)="clearCache()">
+      清除缓存
+    </button>
+    <button ion-item (click)="help()">
       帮助
     </button>
-    <button ion-item >
+    <button ion-item (click)="settings()">
       设置
     </button>
-    <button ion-item >
+    <button ion-item>
       在线客服
     </button>
-    <button ion-item >
+    <button ion-item (click)="about()">
       关于
     </button>
   </ion-list>
