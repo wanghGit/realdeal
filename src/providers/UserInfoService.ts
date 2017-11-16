@@ -16,7 +16,7 @@ export class UserInfoService {
         private storageService:StorageService) { }
 
     login(user) {
-        var url = this.API_URL + "/find/user";
+        var url = this.API_URL + "/user/login";
         return this.httpService.httpPostNoAuth(url, user);
     }
 

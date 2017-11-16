@@ -15,12 +15,20 @@
 
 <ion-content>
   <ion-list>
-    <ion-item navPush="LoginPage">
+    <ion-item navPush="LoginPage" *ngIf="!isLogin;else logout1">
       <ion-avatar>
         <img src="../../assets/imgs/to-user.jpg">
       </ion-avatar>
       <p>登录</p>
     </ion-item>
+    <ng-template #logout1>
+      <ion-item (click)="logout()">
+        <ion-avatar>
+          <img src="../../assets/imgs/to-user.jpg">
+        </ion-avatar>
+        <p>注销</p>
+      </ion-item>
+    </ng-template>
     <button ion-item>
       我的答主页
     </button>

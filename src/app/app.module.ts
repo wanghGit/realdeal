@@ -18,6 +18,8 @@ import { IonicStorageModule } from '@ionic/storage';
 //服务要加这里
 import { HttpService } from "../providers/HttpService";
 import { StorageService } from "../providers/StorageService";
+import { EmojiPickerComponentModule } from '../components/emoji-picker/emoji-picker.module';
+import { RegisterPageModule } from '../pages/register/register.module';
 @NgModule({
   declarations: [
     MyApp,
@@ -30,7 +32,9 @@ import { StorageService } from "../providers/StorageService";
     TabsPageModule,
     ProfilePageModule,
     ChatListPageModule,
+    EmojiPickerComponentModule,
     IonicModule.forRoot(MyApp),
+    RegisterPageModule,
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
