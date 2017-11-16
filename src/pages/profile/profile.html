@@ -1,0 +1,46 @@
+<!--
+  Generated template for the ProfilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>我</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+      <ion-item navPush="LoginPage" >
+          <ion-avatar>
+            <img src="../../assets/imgs/to-user.jpg">
+          </ion-avatar>
+          <p>登录</p>
+        </ion-item>
+    <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
+      我的答主页
+    </button>
+    <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
+      我答
+    </button>
+    <button ion-item (click)="itemSelected(item)">
+      我的分币
+    </button>
+    <button ion-item (click)="itemSelected(item)">
+      帮助
+    </button>
+    <button ion-item >
+      设置
+    </button>
+    <button ion-item >
+      在线客服
+    </button>
+    <button ion-item >
+      关于
+    </button>
+  </ion-list>
+</ion-content>

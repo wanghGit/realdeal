@@ -1,0 +1,40 @@
+<!--
+  Generated template for the Myinfo page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+  
+      <ion-title>myinfo</ion-title>
+      
+      <ion-buttons end>
+        <button ion-button icon-only (click)="presentActionSheet()">
+          <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+    <div padding class="about-info">
+      <h4>Ionic Conference</h4>
+  
+      <ion-list no-lines>
+        <ion-item>
+          <ion-label>RealName:{{user?.RealName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Sex:{{user?.Sex}}</ion-label>
+        </ion-item>
+      </ion-list>
+  
+    </div>
+  </ion-content>
