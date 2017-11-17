@@ -20,6 +20,7 @@ import { HttpService } from "../providers/HttpService";
 import { StorageService } from "../providers/StorageService";
 import { EmojiPickerComponentModule } from '../components/emoji-picker/emoji-picker.module';
 import { RegisterPageModule } from '../pages/register/register.module';
+import { FindSearchPageModule } from '../pages/find-search/find-search.module';
 @NgModule({
   declarations: [
     MyApp,
@@ -35,6 +36,7 @@ import { RegisterPageModule } from '../pages/register/register.module';
     EmojiPickerComponentModule,
     IonicModule.forRoot(MyApp),
     RegisterPageModule,
+    FindSearchPageModule,
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],

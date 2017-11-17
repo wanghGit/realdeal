@@ -7,15 +7,15 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>发现</ion-title>
+    <ion-searchbar (ionFocus)="focus()" placeholder="搜索您的问题" [(ngModel)]="search" [showCancelButton]=false>
+    </ion-searchbar>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-  <ion-searchbar placeholder="搜索您的问题" [(ngModel)]="search" [showCancelButton]=false (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
-  </ion-searchbar>
+<ion-content>
+  
   <ion-grid text-center class="kind">
     <ion-row>
       <ion-col>
