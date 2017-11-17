@@ -15,17 +15,7 @@ export class HomePage {
 
   @ViewChild(Content) content: Content;
   @ViewChild('chat_input') messageInput: TextInput;
-  msgList = [];
-  lqh: UserInfo = {
-    id: '1',
-    name: 'lqh',
-    avatar: '../../assets/imgs/to-user.jpg',
-  };
-  wh: UserInfo = {
-    id: '2',
-    name: 'wh',
-    avatar: '../../assets/imgs/to-user.jpg',
-  };
+  //msgList = [];
   toUser: UserInfo = {
     id: null,
     name: null
@@ -41,7 +31,16 @@ export class HomePage {
   constructor(public navParams: NavParams, public navCtrl: NavController,
     public homeService: HomeService, public events: Events, public storage: Storage
   ) {
-
+    this.storage.get('isLogin').then((isLogin) => {
+      if (isLogin === true) {
+        this.storage.get('user').then((userInfo) => {
+          //this.storage.get('user').then((user) => {
+          this.user = userInfo; console.log(this.user.id + '////user')
+          this.events.publish('user:login', this.user);
+        });
+        // });
+      }
+    });
 
     //初始化实时通讯 SDK
     // this.realtime = new Realtime({
@@ -63,21 +62,30 @@ export class HomePage {
   }
 
   ask(id) {
-    console.log('---------->', this.editorMsg)
     this.user.id = this.editorMsg;
     //this.events.publish('user:login',this.user)
-    this.storage.set('user', { id: id })
-    this.homeService.ask(id).subscribe(toUser => {
-      console.log(toUser)
-      this.toUser.id = toUser.id.toString();
-      this.toUser.name = toUser.name;
-      this.navCtrl.push('Chat', {
-        // name: user.name,
-        // id: user.id
-        user: this.user,
-        toUser: this.toUser
-      })
-    })
+    this.storage.get('isLogin').then((isLogin) => {
+      if (isLogin === true) {
+        //this.events.publish('user:talk', this.user)
+        //this.storage.set('user', { id: id })
+        this.homeService.ask(id).subscribe(toUser => {
+          //console.log(toUser)
+          this.toUser.id = toUser.id.toString();
+          this.toUser.name = toUser.name;
+          this.navCtrl.push('Chat', {
+            // name: user.name,
+            // id: user.id
+            user: this.user,
+            toUser: this.toUser
+          })
+        })
+      }
+      else if (isLogin === false) {
+        alert('请先登录');
+        this.navCtrl.push('LoginPage');
+      }
+
+    });
   }
 
   onFocus() {
@@ -102,7 +110,7 @@ export class HomePage {
   }
 
   gotoChatList() {
-    this.events.publish('user:login', this.user)
+    //this.events.publish('user:login', this.user)
     this.navCtrl.push('ChatListPage');
   }
 }

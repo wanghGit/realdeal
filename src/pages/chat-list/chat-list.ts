@@ -14,34 +14,25 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'chat-list.html',
 })
 export class ChatListPage {
-  chatList = [];
+  chatListPage = [];
   constructor(public events: Events, public navCtrl: NavController, public navParams: NavParams, public storage: Storage, ) {
-    this.events.subscribe('chatList', (chatStorage) => {
+    this.events.subscribe('chatList', (chatList) => {
       // this.chatList=data
       console.log('聊天列表发生变化')
       //this.chatList=chatStorage
-      for (let i = 0; i < chatStorage.length; i++) {
-        //this.chatList=chatStorage[i].user
-        this.chatList.push({
-          userName: chatStorage[i].user.id,
-          msg: chatStorage[i].info.record.msg,
-        })
-        // this.chatList = [{
-        //   user: { id: chatStorage[i].user.id },
-        //   info: { toUser: { id: chatStorage[i].info.toUser.id }, record: { msg: chatStorage[i].info.record.msg} }
-        // }];
-        console.log(this.chatList[i].userName + '/////' + chatStorage[i].user.id)
-        console.log(this.chatList[i].msg + '/////' + chatStorage[i].info.record.msg)
-      }
+      //if (chatList.length !== 0) {
+        for (let i = 0; i < chatList.length; i++) {
+          //this.chatList=chatStorage[i].user
+          this.chatListPage.push({
+            userName: chatList[i].userId,
+            msg: chatList[i].message,
+          })
+          console.log(this.chatListPage[i].userName + '///chatlsit msg//'+this.chatListPage[i].msg )
+        }
+     // }
     })
 
-    // for(let i=0;i<this.storage.get('chatStorage').length;i++){
-    //   if(this.storage.get('chatStorage')[i].user.id===this.storage.get('user').id){
-    //     this.chatList=this.storage.get('chatStorage')[i].info.record.msg
-    //   }
-    // }
-
-    //this.chatList.sort((a,b)=>a.record[a.record.length-1].time-b.record[a.record.length-1].time)
+    //this.chatList.sort((a, b) => a.record[a.record.length - 1].time - b.record[a.record.length - 1].time)
   }
 
 
