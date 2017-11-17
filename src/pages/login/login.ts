@@ -51,7 +51,6 @@ export class LoginPage {
         this.navCtrl.setRoot('TabsPage');
         this.storage.set('user', data);
         this.storage.set('isLogin', true);
-        
       }
       else {
         let toast = this.toastCtrl.create({

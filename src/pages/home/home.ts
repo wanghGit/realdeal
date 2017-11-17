@@ -41,7 +41,7 @@ export class HomePage {
         // });
       }
     });
-
+    
     //初始化实时通讯 SDK
     // this.realtime = new Realtime({
     //   appId: 'tfaMh3UmNXSphGOeLMjFYfmi-gzGzoHsz',
@@ -80,11 +80,10 @@ export class HomePage {
           })
         })
       }
-      else if (isLogin === false) {
+      else {
         alert('请先登录');
         this.navCtrl.push('LoginPage');
       }
-
     });
   }
 

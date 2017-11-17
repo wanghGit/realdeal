@@ -31,12 +31,17 @@ export class ProfilePage {
     );
   }
 
-
-
   answer() { }
   clearCache() {
+    this.storage.clear();
+    this.storage.set('isLogin', false);
+    this.storage.set('user', {});
+    this.storage.set('chatStorage', []);
+    this.initUser();
+    this.storage.get('chatStorage').then(chatStorage => console.log(chatStorage));
+    
     console.log('清理缓存：图片，视频，语音。。。不清理聊天记录，登录信息');
-   }
+  }
   help() { }
   settings() { }
   about() { }

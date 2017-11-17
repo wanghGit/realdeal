@@ -5,6 +5,7 @@ import { ChatService, ChatMessage, UserInfo } from "../../providers/chat-service
 import { Realtime, TextMessage } from 'leancloud-realtime';
 import { TypedMessagesPlugin } from 'leancloud-realtime-plugin-typed-messages';
 import { Storage } from '@ionic/storage';
+import { NavController } from 'ionic-angular/navigation/nav-controller';
 
 @IonicPage()
 @Component({
@@ -23,59 +24,67 @@ export class Chat {
 
     realtime;
     //存储聊天记录到本地
-    chatStorage =
-    [
-        { userId: '', info: [{ toUser: { id: '', name: '', head: '' }, record: [''] }] }
-    ]
+    chatStorage = []
 
+    ionViewCanEnter() {
+        if (this.navParams.get('toUser') && this.navParams.get('toUser').id) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    ionViewDidLoad() {
+        //获取缓存数据
+        this.storage.get('user').then(user => {
+            this.user = user;
+            this.realtime.createIMClient(this.user.id.toString()).then((Jerry) => {
+                Jerry.on('message', (message, conversation) => {
+                    console.log('Message received: ', message);
+                    this.msgList.push({
+                        userName: message.from,
+                        message: message.text,
+                        messageId: Date.now().toString(),
+                        userId: message.from,
+                    })
+                });
+            }).catch(console.error);
+            this.storage.get('chatStorage').then((chatStorage) => {
+                let userNotExist = true;
+                for (let i = 0; i < chatStorage.length; i++) {
+                    //判断是否有该用户的记录
+                    if (chatStorage[i].userId === this.user.id) {
+                        chatStorage[i].info.push({
+                            toUser: { id: this.toUser.id, name: this.toUser.name, head: '' },
+                            record: this.editorMsg
+                        })
+                        userNotExist = false;
+                    }
+                }
+                if (userNotExist) {
+                    console.log('not exist----》', this.toUser)
+                    this.chatStorage.push({
+                        userId: this.user.id,
+                        info: [{ toUser: { id: this.toUser.id, name: this.toUser.name, head: '' }, record: [this.editorMsg] }]
+                    })
+                }
+                this.storage.set('chatStorage', this.chatStorage);
+            });
+        })
+    }
     constructor(public navParams: NavParams,
         public chatService: ChatService,
         public events: Events,
-        public storage: Storage, ) {
+        public storage: Storage,
+        public navCtrl: NavController
+    ) {
         // Get the navParams toUserId parameter
         this.toUser = navParams.get('toUser');
-        this.user = navParams.get('user'),
-            // console.log('---->',this.user)
-            // console.log('---->',this.toUser)
-            // 初始化实时通讯 SDK
-            this.realtime = new Realtime({
-                appId: 'tfaMh3UmNXSphGOeLMjFYfmi-gzGzoHsz',
-                plugins: [TypedMessagesPlugin], // 注册富媒体消息插件
-            });
-        this.realtime.createIMClient(this.user.id).then((Jerry) => {
-            Jerry.on('message', (message, conversation) => {
-                console.log('Message received: ', message);
-                this.msgList.push({
-                    userName: message.from,
-                    message: message.text,
-                    messageId: Date.now().toString(),
-                    userId: message.from,
-                })
-            });
-        }).catch(console.error);
-        let userNotExist = true;
-        //获取缓存数据
-        this.storage.get('chatStorage').then((chatStorage) => {
-
-            for (let i = 0; i < chatStorage.length; i++) {
-                //判断是否有该用户的记录
-                if (chatStorage[i].userId === this.user.id) {
-                    chatStorage[i].info.push({
-                        toUser: { id: this.toUser.id, name: '', head: '' },
-                        record: this.editorMsg
-                    })
-                    userNotExist = false;
-                }
-            }
+        // 初始化实时通讯 SDK
+        this.realtime = new Realtime({
+            appId: 'tfaMh3UmNXSphGOeLMjFYfmi-gzGzoHsz',
+            plugins: [TypedMessagesPlugin], // 注册富媒体消息插件
         });
-        if (userNotExist) {
-            this.chatStorage.push({
-                userId: this.user.id,
-                info: [{ toUser: { id: this.toUser.id, name: '', head: '' }, record: [this.editorMsg] }]
-            })
-        }
-        console.log("///////rece/////" + this.chatStorage.length);
-        this.storage.set('chatStorage', this.chatStorage);
         //this.storage.set('user', this.user);
         //this.events.publish('user:talk', this.user)
         //this.events.publish('user:login',this.user)
@@ -147,10 +156,10 @@ export class Chat {
                 }
             })
         // Tom 用自己的名字作为 clientId，获取 IMClient 对象实例
-        this.realtime.createIMClient(this.user.id).then((tom) => {
+        this.realtime.createIMClient(this.user.id.toString()).then((tom) => {
             // 创建与Jerry之间的对话
             return tom.createConversation({
-                members: [this.toUser.id],
+                members: [this.toUser.id.toString()],
                 name: 'Tom & Jerry',
             });
         }).then((conversation) => {

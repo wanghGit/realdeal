@@ -7,20 +7,19 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>chatList</ion-title>
+    <ion-title>聊天列表</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
-  <ion-list *ngFor="let c of chatListPage">
-
+  <ion-list *ngFor="let c of info">
     <ion-item navPush="Chat">
       <ion-avatar item-left>
         <img src="../../assets/imgs/to-user.jpg">
       </ion-avatar>
-      <h2>{{c.userName}}</h2>
-      <p>{{c.msg}}</p>
+      <h2>{{c?.toUser?.name}}</h2>
+      <p>{{c?.record[c?.record?.length-1]}}</p>
     </ion-item>
   </ion-list>
 </ion-content>
