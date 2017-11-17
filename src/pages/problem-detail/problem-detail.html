@@ -1,0 +1,56 @@
+<!--
+  Generated template for the ProblemDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>详情</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-item>
+    <ion-avatar item-start>
+      <img src="../../assets/imgs/to-user.jpg">
+    </ion-avatar>
+    {{problem?.user?.name}}
+  </ion-item>
+  <div>
+    <h2>
+      {{problem?.title}}
+    </h2>
+  </div>
+  <div>
+    <h4>
+      {{problem?.content}}
+    </h4>
+  </div>
+  <ion-card *ngFor="let p of commentList">
+    <ion-card-title>
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="../../assets/imgs/to-user.jpg">
+        </ion-avatar>
+        <h2>{{p?.user?.name}}</h2>
+      </ion-item>
+    </ion-card-title>
+    <ion-card-content>
+      {{p.comment.content}}
+    </ion-card-content>
+  </ion-card>
+  <ion-footer>
+    <ion-toolbar>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-10>
+            <ion-input [(ngModel)]="comment" placeholder="请输入你的评论"></ion-input>
+          </ion-col>
+          <ion-col col-2>
+            <button ion-button color="primary">发送</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>

@@ -21,7 +21,7 @@ export class ProfileInfoPage {
     role: '',
   };
   isLogin;
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
     public navParams: NavParams, public storage: Storage) {
   }
@@ -31,9 +31,10 @@ export class ProfileInfoPage {
   }
 
   initUser() {
-    this.storage.get('user').then(user => this.user = user);
-    this.storage.get('isLogin').then(isLogin => this.isLogin = isLogin
-    );
+    this.storage.get('user').then(user => {
+      this.user = user
+    });
+    this.storage.get('isLogin').then(isLogin => this.isLogin = isLogin);
   }
 
   logout() {

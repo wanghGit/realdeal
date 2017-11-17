@@ -22,6 +22,10 @@ import { EmojiPickerComponentModule } from '../components/emoji-picker/emoji-pic
 import { RegisterPageModule } from '../pages/register/register.module';
 import { FindSearchPageModule } from '../pages/find-search/find-search.module';
 import { ProfileInfoPageModule } from '../pages/profile-info/profile-info.module';
+import { OtherInfoPageModule } from '../pages/other-info/other-info.module';
+import { ProblemDetailPageModule } from '../pages/problem-detail/problem-detail.module';
+
+// filter
 @NgModule({
   declarations: [
     MyApp,
@@ -39,6 +43,8 @@ import { ProfileInfoPageModule } from '../pages/profile-info/profile-info.module
     RegisterPageModule,
     FindSearchPageModule,
     ProfileInfoPageModule,
+    OtherInfoPageModule,
+    ProblemDetailPageModule,
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],

@@ -15,7 +15,7 @@
 
 
 <ion-content>
-  
+
   <ion-grid text-center class="kind">
     <ion-row>
       <ion-col>
@@ -48,15 +48,53 @@
   </ion-grid>
 
   <ion-card>
-
     <ion-card-header>
-      常见问题
+      大牛专问
     </ion-card-header>
-
-    <ion-card-content>
-      <!-- Add card content here! -->
-    </ion-card-content>
-
   </ion-card>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6 *ngFor="let p of professorList">
+        <ion-card (click)="showProfessorDetail(p)">
+          <ion-card-content>
+            <ion-card-title>
+              <ion-item>
+                <ion-avatar item-start>
+                  <img src="../../assets/imgs/to-user.jpg">
+                </ion-avatar>
+                <h2>{{p?.name}}</h2>
+              </ion-item>
+              <ion-item>
+                <p>
+                  {{p.role}}
+                </p>
+              </ion-item>
+            </ion-card-title>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
+  <ion-card>
+    <ion-card-header>
+      兴趣话题
+    </ion-card-header>
+  </ion-card>
+  <ion-card *ngFor="let p of problemList" (click)="showProblemDetail(p)">
+    <ion-card-title>
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="../../assets/imgs/to-user.jpg">
+        </ion-avatar>
+        <h2>{{p?.user?.name}}</h2>
+      </ion-item>
+      <ion-item>
+        {{p.title}}
+      </ion-item>
+    </ion-card-title>
+    <ion-card-content>
+      {{p.content|filterHanzi:50}}
+    </ion-card-content>
+  </ion-card>
 </ion-content>
