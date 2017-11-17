@@ -33,14 +33,14 @@ export class HomePage {
   ) {
     this.storage.get('isLogin').then((isLogin) => {
       if (isLogin === true) {
-        this.storage.get('user').then((user) => {
-        //this.storage.get('user').then((user) => {
-          this.storage.get('user').then(user =>{  this.user = user;console.log(user)});
-        this.events.publish('user:login',user)
+        this.storage.get('user').then((userInfo) => {
+          //this.storage.get('user').then((user) => {
+          this.user = userInfo; console.log(this.user.id + '////user')
+          this.events.publish('user:login', this.user);
         });
-       // });
+        // });
       }
-  });
+    });
 
     //初始化实时通讯 SDK
     // this.realtime = new Realtime({
@@ -62,7 +62,6 @@ export class HomePage {
   }
 
   ask(id) {
-    console.log('---------->', this.editorMsg)
     this.user.id = this.editorMsg;
     //this.events.publish('user:login',this.user)
     this.storage.get('isLogin').then((isLogin) => {

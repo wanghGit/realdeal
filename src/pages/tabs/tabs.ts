@@ -19,6 +19,9 @@ export class TabsPage {
   tab3Root = ProfilePage;
 
   realtime;
+  //存储聊天列表
+  chatList = [];
+
   constructor(public events: Events, public storage: Storage, ) {
     // if()
     // 初始化实时通讯 SDK
@@ -27,100 +30,81 @@ export class TabsPage {
       plugins: [TypedMessagesPlugin], // 注册富媒体消息插件
     });
 
-    this.createUserChat();
+    //this.createUserChat();
     this.createUserChatList();
-
+    //this.chatListFirst();
   }
 
-  createUserChat() {
-    console.log('subscribe')
-    this.events.subscribe('user:talk', (user) => this.subscribe(user));
+  // createUserChat() {
+  //   console.log('subscribe')
+  //   this.events.subscribe('user:talk', (user) => this.subscribe(user));
 
-  }
+  // }
   createUserChatList() {
     console.log('chatListsubscribe/////')
     this.events.subscribe('user:login', (user) => this.chatListsubscribe(user));
   }
 
-  subscribe(user) {
-    console.log('subscribe', user)
-    this.realtime.createIMClient(user.id).then((Jerry) => {
+  // subscribe(user) {
+  //   console.log('subscribe', user.id)
+  //   let userNotExist = true;
+  //   this.realtime.createIMClient(user.id).then((Jerry) => {
+  //     Jerry.on('message', (message, conversation) => {
+
+  //       console.log('Message received/////: ', message);
+  //       this.storage.get('chatStorage').then((chatStorage) => {
+  //         for (let i = 0; i < chatStorage.length; i++) {
+  //           //判断是否有该用户的记录
+  //           if (chatStorage[i].userId === user.id) {
+  //             chatStorage[i].info.push({
+  //               toUser: { id: message.from, name: '', head: '' },
+  //               record: message.text
+  //             })
+  //             userNotExist = false;
+  //           }
+  //         }
+  //         if (userNotExist) {
+  //           chatStorage.push({
+  //             userId: user.id,
+  //             info: [{ toUser: { id: message.from, name: '', head: '' }, record: [message.text] }]
+  //           })
+  //         }
+  //         //this.storage.set('chatStorage', chatStorage);
+  //         console.log('chatStorage-----rec---->');
+  //         console.log(chatStorage);
+  //         this.events.publish('chatReco', chatStorage);
+  //       });
+
+  //     });
+  //   }).catch(console.error);
+  // }
+  chatListsubscribe(user) {
+    this.realtime.createIMClient(user.id.toString()).then((Jerry) => {
       Jerry.on('message', (message, conversation) => {
-
-        console.log('Message received/////: ', message);
         this.storage.get('chatStorage').then((chatStorage) => {
-          //this.storage.get('user').then(user => {
-          //console.log(user.id+'////'+chatStorage)
-          //let mesgExist = false;
-          //let userExist = false;
-          //for (let i = 0; i < chatStorage.length; i++) {
-          //console.log(user.id+'////'+chatStorage[i].info.toUser.id)
-          //用户是否登录过
-          //if (chatStorage[i].user.id === user.id) {
-          //userExist=true;
-          //for (let j = 0; j < chatStorage[i].info[j].length; j++) {
-          //console.log(user.id+'////'+chatStorage[i].info[j])
-          //console.log(user.id+'////'+chatStorage[i].info.toUser.id+'////'+message.from)
-          //判断与当前用户的聊天记录
-          //if (message.from === chatStorage[i].info.toUser.id) {
-          //console.log(user.id+'////'+chatStorage[i].info.toUser.id+'////'+message.from)
-          //mesgExist = true;
-          chatStorage = [{
-            user: { id: user.id },
-            info: { toUser: { id: message.from }, record: { msg: message.text } }
-          }];
-
-          //chatStorage[i].info[j].record.push(message);
-          //}
-          //}
-          // if (!mesgExist) {
-          //   // chatStorage[i].info.push(
-          //   //   {
-          //   //     toUser: { id: message.from },
-          //   //     record: [message]
-          //   //   }
-          //   // )
-          //   chatStorage = [{
-          //     user: { id: user.id },
-          //     info: { toUser: { id: message.from }, record: {msg: message.text}} 
-          // }];
-          // this.events.publish('chatList', chatStorage);
-          // }
-          //chatStorage[i].info.push(message);
-          //return
-          //}
-          //用户第一次登录
-          // if(!userExist) {
-          //   chatStorage = [{
-          //     user: { id: user.id },
-          //     info: { toUser: { id: message.from }, record: {msg: message.text}} 
-          // }];
-          // this.events.publish('chatList', chatStorage);
-          // }
-
-          //}
-          this.storage.set('chatStorage', chatStorage);
-          console.log('chatStorage--------->');
-          console.log(chatStorage);
-          this.events.publish('chatReco', chatStorage);
-          //})
-
+          //console.log(chatStorage.length+'/////chatListsubscribe/len////: '+user.id);
+          for (let i = 0; i < chatStorage.length; i++) {
+            //判断是否有当前用户的
+            if (chatStorage[i].userId === user.id) {
+              //console.log(chatStorage[i].userId+'/////chatListsubscribe/////: '+user.id);
+              for (let j = 0; j < chatStorage[i].info.length; j++) {
+                //console.log(chatStorage[i].info[j].record+'/////info len/////: '+user.id);
+                this.chatList.push({
+                  userName: chatStorage[i].userId,
+                  message: chatStorage[i].info[j].record,
+                  messageId: Date.now().toString(),
+                  userId: chatStorage[i].userId,
+                  toUserId: chatStorage[i].info[j].toUser.id,
+                })
+              }
+            }
+          }
+          for (let i = 0; i < this.chatList.length; i++) {
+          //console.log(this.chatList[i].message+'/////chatLislen/////: '+this.chatList[i].userName);
+          this.events.publish('chatList', this.chatList);
+          }
         });
-
       });
     }).catch(console.error);
-  }
-  chatListsubscribe(user) {
-    // this.realtime.createIMClient(user.id).then((Jerry) => {
-    //   Jerry.on('message', (message, conversation) => {
-
-    console.log('/////Message received/////: ');
-    this.storage.get('chatStorage').then((chatStorage) => {
-      this.events.publish('chatList', chatStorage);
-      //console.log('////'+chatStorage)
-    });
-
-    //   });
-    // }).catch(console.error);
   }
 }
