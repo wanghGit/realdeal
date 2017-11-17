@@ -54,7 +54,6 @@ export class LoginPage {
         let toast = this.toastCtrl.create({
           message: '用户名或密码错误.',
           duration: 3000,
-          position: 'middle',
           showCloseButton: true,
           closeButtonText: '关闭'
         });

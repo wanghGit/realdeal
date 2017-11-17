@@ -1,0 +1,44 @@
+<!--
+  Generated template for the ProfilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>个人资料</ion-title>
+    <ion-buttons end>
+        <button ion-button (click)="save()">
+          保存
+        </button>
+      </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <button ion-item>
+      头像
+      <ion-avatar float-right>
+        <img src="../../assets/imgs/to-user.jpg">
+      </ion-avatar>
+    </button>
+    <button ion-item>
+      <ion-label color="primary" stacked>昵称</ion-label>
+      <ion-input [(ngModel)]="user.name"></ion-input>
+    </button>
+    <button ion-item>
+      <ion-label color="primary" stacked>头衔</ion-label>
+      <ion-input [(ngModel)]="user.role"></ion-input>
+    </button>
+    <button ion-item>
+      擅长关键字
+    </button>
+    <button ion-item (click)="logout()">
+      退出登录
+    </button>
+  </ion-list>
+</ion-content>

@@ -15,6 +15,30 @@
 
 <ion-content>
   <ion-list>
+    <button ion-item navPush="LoginPage" *ngIf="!isLogin;else info">
+      登录
+    </button>
+    <ng-template #info>
+      <button ion-item navPush="ProfileInfoPage">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-2>
+              <ion-avatar>
+                <img src="../../assets/imgs/to-user.jpg">
+              </ion-avatar>
+            </ion-col>
+            <ion-col col-10>
+              <ion-row>
+                {{user?.name}}
+              </ion-row>
+              <ion-row>
+                <p>查看并编辑个人资料</p>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </button>
+    </ng-template>
     <button ion-item>
       我的答主页
     </button>
@@ -22,7 +46,10 @@
       我的回答
     </button>
     <button ion-item>
-      我的分币 100
+      我的分币
+      <div float-right>
+        100
+      </div>
     </button>
     <button ion-item (click)="clearCache()">
       清除缓存
@@ -39,16 +66,7 @@
     <button ion-item (click)="about()">
       关于
     </button>
-    <button ion-item navPush="LoginPage" *ngIf="!isLogin;else logout1">
-      登录
-    </button>
-    <ng-template #logout1>
-      <button ion-item (click)="logout()">
-        <ion-avatar>
-          <img src="../../assets/imgs/to-user.jpg">
-        </ion-avatar>
-        注销
-      </button>
-    </ng-template>
+
+
   </ion-list>
 </ion-content>

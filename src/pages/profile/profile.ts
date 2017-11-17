@@ -31,16 +31,13 @@ export class ProfilePage {
     );
   }
 
-  logout() {
-    console.log(1)
-    this.storage.set('user', {});
-    this.storage.set('isLogin', false);
-    this.initUser();
-  }
+
 
   answer() { }
-  clearCache() { }
+  clearCache() {
+    console.log('清理缓存：图片，视频，语音。。。不清理聊天记录，登录信息');
+   }
   help() { }
-  seetings() { }
+  settings() { }
   about() { }
 }
