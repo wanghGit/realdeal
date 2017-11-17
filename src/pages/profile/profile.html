@@ -39,25 +39,25 @@
         </ion-grid>
       </button>
     </ng-template>
-    <button ion-item>
+    <button ion-item *ngIf="isLogin">
       我的答主页
     </button>
-    <button ion-item (click)="answer()">
+    <button ion-item *ngIf="isLogin" (click)="answer()">
       我的回答
     </button>
-    <button ion-item>
+    <button *ngIf="isLogin" ion-item>
       我的分币
       <div float-right>
         100
       </div>
     </button>
-    <button ion-item (click)="clearCache()">
+    <button *ngIf="isLogin" ion-item (click)="clearCache()">
       清除缓存
     </button>
     <button ion-item (click)="help()">
       帮助
     </button>
-    <button ion-item (click)="settings()">
+    <button *ngIf="isLogin" ion-item (click)="settings()">
       设置
     </button>
     <button ion-item>
