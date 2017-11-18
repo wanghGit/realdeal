@@ -100,6 +100,9 @@ export class TabsPage {
           //   }
           // }
           //console.log(this.chatList[i].message+'/////chatLislen/////: '+this.chatList[i].userName);
+          for (let i = 0; i < chatStorage.length; i++) {
+            console.log(chatStorage[i].userId + '///tabs msg//' + chatStorage[i].record)
+        }
           this.events.publish('chatList', chatStorage);
           
         });
