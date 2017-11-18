@@ -73,8 +73,6 @@ export class HomePage {
           this.toUser.id = toUser.id.toString();
           this.toUser.name = toUser.name;
           this.navCtrl.push('Chat', {
-            // name: user.name,
-            // id: user.id
             user: this.user,
             toUser: this.toUser
           })

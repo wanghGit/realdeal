@@ -83,26 +83,25 @@ export class TabsPage {
       Jerry.on('message', (message, conversation) => {
         this.storage.get('chatStorage').then((chatStorage) => {
           //console.log(chatStorage.length+'/////chatListsubscribe/len////: '+user.id);
-          for (let i = 0; i < chatStorage.length; i++) {
-            //判断是否有当前用户的
-            if (chatStorage[i].userId === user.id) {
-              //console.log(chatStorage[i].userId+'/////chatListsubscribe/////: '+user.id);
-              for (let j = 0; j < chatStorage[i].info.length; j++) {
-                //console.log(chatStorage[i].info[j].record+'/////info len/////: '+user.id);
-                this.chatList.push({
-                  userName: chatStorage[i].userId,
-                  message: chatStorage[i].info[j].record,
-                  messageId: Date.now().toString(),
-                  userId: chatStorage[i].userId,
-                  toUserId: chatStorage[i].info[j].toUser.id,
-                })
-              }
-            }
-          }
-          for (let i = 0; i < this.chatList.length; i++) {
+          // for (let i = 0; i < chatStorage.length; i++) {
+          //   //判断是否有当前用户的
+          //   if (chatStorage[i].userId === user.id) {
+          //     //console.log(chatStorage[i].userId+'/////chatListsubscribe/////: '+user.id);
+          //     for (let j = 0; j < chatStorage[i].info.length; j++) {
+          //       //console.log(chatStorage[i].info[j].record+'/////info len/////: '+user.id);
+          //       this.chatList.push({
+          //         userName: chatStorage[i].userId,
+          //         message: chatStorage[i].info[j].record,
+          //         messageId: Date.now().toString(),
+          //         userId: chatStorage[i].userId,
+          //         toUserId: chatStorage[i].info[j].toUser.id,
+          //       })
+          //     }
+          //   }
+          // }
           //console.log(this.chatList[i].message+'/////chatLislen/////: '+this.chatList[i].userName);
-          this.events.publish('chatList', this.chatList);
-          }
+          this.events.publish('chatList', chatStorage);
+          
         });
       });
     }).catch(console.error);
