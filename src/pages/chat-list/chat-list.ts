@@ -26,11 +26,10 @@ export class ChatListPage {
         //this.chatList=chatStorage[i].user
         this.chatListPage.push({
           userName: chatList[i].userId,
-          msg: chatList[i].message,
+          msg: chatList[i].record,
         })
         console.log(this.chatListPage[i].userName + '///chatlsit msg//' + this.chatListPage[i].msg)
-      }
-      // }
+       }
     })
 
     //this.chatList.sort((a, b) => a.record[a.record.length - 1].time - b.record[a.record.length - 1].time)
@@ -45,7 +44,11 @@ export class ChatListPage {
           //判断是否有该用户的记录
           if (chatStorage[i].userId === user.id) {
             console.log('--->', chatStorage[i]);
-            this.info = chatStorage[i].info
+            //this.info = chatStorage[i].info
+            this.info.push({
+              userName: chatStorage[i].userId,
+              msg: chatStorage[i].record,
+            })
           }
         }
       })
