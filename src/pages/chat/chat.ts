@@ -54,37 +54,37 @@ export class Chat {
                         head: '',
                         record: message.text
                     })
+                    this.storage.set('chatStorage', this.chatStorage);
                 });
             }).catch(console.error);
-            
-            //this.storeChat(this.msgList);
-            //this.storage.get('chatStorage').then((chatStorage) => {
-                //let userNotExist = true;
-                //for (let i = 0; i < chatStorage.length; i++) {
-                    //判断是否有该用户的记录
-                    // if (chatStorage[i].userId === this.user.id) {
-                    //     chatStorage[i].info.push({
-                    //         toUser: { id: this.toUser.id, name: this.toUser.name, head: '' },
-                    //         record: this.editorMsg
-                    //     })
-                    //     userNotExist = false;
-                    // }
-                //}
-                // if (userNotExist) {
-                //     console.log('not exist----》', this.toUser)
-                //     this.chatStorage.push({
-                //         userId: this.user.id,
-                //         info: [{ toUser: { id: this.toUser.id, name: this.toUser.name, head: '' }, record: [this.editorMsg] }]
-                //     })
-                // }
-                this.storage.get('chatStorage').then((chatStorage) => {
-                    for (let i = 0; i < chatStorage.length; i++) {
-                   
-                            console.log(chatStorage[i].userId + "///////rece/////" + chatStorage[i].record);
-                        
-                    }
+
+            // this.storage.get('chatStorage').then((chatStorage) => {
+            // let userNotExist = true;
+            // for (let i = 0; i < chatStorage.length; i++) {
+            // 判断是否有该用户的记录
+            // if (chatStorage[i].userId === this.user.id) {
+            //     chatStorage[i].info.push({
+            //         toUser: { id: this.toUser.id, name: this.toUser.name, head: '' },
+            //         record: this.editorMsg
+            //     })
+            //     userNotExist = false;
+            // }
+            // }
+            // if (userNotExist) {
+            //     console.log('not exist----》', this.toUser)
+            //     this.chatStorage.push({
+            //         userId: this.user.id,
+            //         info: [{ toUser: { id: this.toUser.id, name: this.toUser.name, head: '' }, record: [this.editorMsg] }]
+            //     })
+            // }
+            this.storage.get('chatStorage').then((chatStorage) => {
+                for (let i = 0; i < this.chatStorage.length; i++) {
+                    //for (let j = 0; j < this.chatStorage[i].info.length; j++) {
+                        console.log(this.chatStorage[i].userId + "///////rece/////" + this.chatStorage[i].record);
+                    //}
+                }
                 //});
-                this.storage.set('chatStorage', this.chatStorage);
+                //this.storage.set('chatStorage', this.chatStorage);
             });
         })
     }
@@ -174,33 +174,43 @@ export class Chat {
         //获取缓存数据
         //this.storage.get('chatStorage').then((chatStorage) => {
 
-        //for (let i = 0; i < chatStorage.length; i++) {
-        //判断是否有该用户的记录
-        //if (chatStorage[i].userId === this.user.id) {
-        // chatStorage[i].info.push({
-        //     toUser: { id: this.toUser.id, name: '', head: '' },
-        //     record: newMsg.message
-        // })
-        // userNotExist = false;
-        //}
-        //}
-        if (userNotExist) {
-            this.chatStorage.push({
-                userId: this.user.id,
-                toUser: this.toUser.id,
-                name: '',
-                head: '',
-                record: newMsg.message
-            })
-        }
+            // for (let i = 0; i < chatStorage.length; i++) {
+            //     //判断是否有该用户的记录
+            //     if (chatStorage[i].userId === this.user.id) {
+            //         chatStorage[i].info.push({
+            //             toUser: { id: this.toUser.id, name: '', head: '' },
+            //             record: { msg: newMsg.message }
+            //         })
+            //         userNotExist = false;
+            //     }
+            // }
+            if (userNotExist) {
+                this.chatStorage.push({
+                    userId: this.user.id,
+                    toUser: this.toUser.id,
+                    name: '',
+                    head: '',
+                    record: newMsg.message
+                })
+            }
+            // if (userNotExist) {
+            //     console.log('not exist----》', this.toUser)
+            //     this.chatStorage.push({
+            //         userId: this.user.id,
+            //         info: [{ toUser: { id: this.toUser.id, name: '', head: '' }, record: { msg: newMsg.message } }]
+            //     })
+            // }
+
         //});
         this.storage.set('chatStorage', this.chatStorage);
-        this.storage.get('chatStorage').then((chatStorage) => {
-            for (let i = 0; i < chatStorage.length; i++) {
-                    console.log(chatStorage[i].userId + "///////send/////" + chatStorage[i].record);
-            }
-        });
-        
+        //this.storage.get('chatStorage').then((chatStorage) => {
+        for (let i = 0; i < this.chatStorage.length; i++) {
+            //for (let j = 0; j < this.chatStorage[i].info.length; j++) {
+                console.log(this.chatStorage[i].userId + "///////send/////" + this.chatStorage[i].record);
+            //}
+        }
+        //});
+
     }
     /**
      * @name pushNewMsg
