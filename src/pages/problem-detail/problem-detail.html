@@ -39,18 +39,19 @@
       {{p.comment.content}}
     </ion-card-content>
   </ion-card>
-  <ion-footer>
-    <ion-toolbar>
-      <ion-grid>
-        <ion-row>
-          <ion-col col-10>
-            <ion-input [(ngModel)]="comment" placeholder="请输入你的评论"></ion-input>
-          </ion-col>
-          <ion-col col-2>
-            <button ion-button color="primary">发送</button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-toolbar>
-  </ion-footer>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid style="padding:0;">
+      <ion-row>
+        <ion-col col-10>
+          <ion-input [(ngModel)]="comment" placeholder="请输入你的评论"></ion-input>
+        </ion-col>
+        <ion-col col-2>
+          <button ion-button clear color="primary">发送</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
