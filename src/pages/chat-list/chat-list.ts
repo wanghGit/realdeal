@@ -17,7 +17,7 @@ export class ChatListPage {
   info = []; //聊天列表
   constructor(public events: Events, public navCtrl: NavController, public navParams: NavParams, public storage: Storage, ) {
     this.events.subscribe('chatList', (chatStorage) => {
-      console.log('聊天列表发生变化',chatStorage)
+      console.log('chatList 收到消息', chatStorage)
       this.storage.get('user').then((user) => {
         for (let i = 0; i < chatStorage.length; i++) {
           //判断是否有该用户的记录
@@ -25,6 +25,7 @@ export class ChatListPage {
             for (let j = 0; j < chatStorage[i].info.length; j++) {
               let last = chatStorage[i].info[j].record.length - 1;
               this.info.push({
+                toUser: chatStorage[i].info[j].toUser,
                 userName: chatStorage[i].info[j].toUser.id,
                 msg: chatStorage[i].info[j].record[last].msg,
               })
@@ -42,7 +43,7 @@ export class ChatListPage {
     this.storage.get('chatStorage').then((chatStorage) => {
       console.log(chatStorage);
       this.storage.get('user').then((user) => {
-        console.log(chatStorage.length, "//////user/send/////")
+        console.log('chat listchatStorage------>',chatStorage)
         for (let i = 0; i < chatStorage.length; i++) {
           //判断是否有该用户的记录
           if (chatStorage[i].userId === user.id) {
@@ -50,8 +51,9 @@ export class ChatListPage {
             for (let j = 0; j < chatStorage[i].info.length; j++) {
               //if (chatStorage[i].info[j].toUser.id === toUser.id) {
               let last = chatStorage[i].info[j].record.length - 1;
-              // console.log('//////jjj/',chatStorage[i].info[j].record.msg)
+              // console.log('//////jjj/', chatStorage[i].info[j])
               this.info.push({
+                toUser: chatStorage[i].info[j].toUser,
                 userName: chatStorage[i].info[j].toUser.id,
                 msg: chatStorage[i].info[j].record[last].msg,
               })
@@ -63,4 +65,8 @@ export class ChatListPage {
     })
   }
 
+  gotoChat(c) {
+    console.log(c);
+    this.navCtrl.push('Chat', { toUser: c.toUser });
+  }
 }

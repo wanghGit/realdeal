@@ -12,9 +12,9 @@
 
 </ion-header>
 
-<ion-content padding>
-  <ion-list *ngFor="let c of info">
-    <ion-item navPush="Chat">
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let c of info" (click)="gotoChat(c)">
       <ion-avatar item-left>
         <img src="../../assets/imgs/to-user.jpg">
       </ion-avatar>

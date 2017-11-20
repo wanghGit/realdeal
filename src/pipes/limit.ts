@@ -8,7 +8,6 @@ export class FilterHanziPipe implements PipeTransform {
         if (hanzi.length > value) {
             hanzi = hanzi.slice(0, value) + '...';
         }
-        console.log(hanzi)
         return hanzi;
     }
 }

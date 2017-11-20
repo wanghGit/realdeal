@@ -34,37 +34,54 @@ export class Chat {
         }
     }
 
-    ionViewDidLoad() {
+    ionViewWillEnter() {
         //获取缓存数据
         this.storage.get('user').then(user => {
             this.user = user;
             this.realtime.createIMClient(this.user.id.toString()).then((Jerry) => {
                 Jerry.on('message', (message, conversation) => {
-                    console.log('Message received: ', message);
+                    console.log('chat received: ', message);
                     this.msgList.push({
                         userName: message.from,
                         message: message.text,
                         messageId: Date.now().toString(),
                         userId: message.from,
                     })
+                    console.log(this.msgList);
                 });
             }).catch(console.error);
+
+            this.storage.get('chatStorage').then((chatStorage) => {
+                console.log('chat ------>', chatStorage)
+                for (let i = 0; i < chatStorage.length; i++) {
+                    if (chatStorage[i].userId === user.id) {
+                        for (let j = 0; j < chatStorage[i].info.length; j++) {
+                            for (let k = 0; k < chatStorage[i].info[j].record.length; k++) {
+                                this.msgList.push({
+                                    userName: 'lqh',
+                                    message: chatStorage[i].info[j].record[k].message,
+                                    userId: chatStorage[i].info[j].record[k].userId
+                                })
+                            }
+                        }
+                    }
+                }
+            })
         })
     }
+
     constructor(public navParams: NavParams,
         public chatService: ChatService,
         public events: Events,
         public storage: Storage,
         public navCtrl: NavController
     ) {
-        // Get the navParams toUserId parameter
         this.toUser = navParams.get('toUser');
         // 初始化实时通讯 SDK
         this.realtime = new Realtime({
             appId: 'tfaMh3UmNXSphGOeLMjFYfmi-gzGzoHsz',
             plugins: [TypedMessagesPlugin], // 注册富媒体消息插件
         });
-        //this.ionViewDidLoad();
 
     }
 
@@ -139,7 +156,7 @@ export class Chat {
         console.log(newMsg.message + 'newMg')
         //获取缓存数据
         this.storage.get('chatStorage').then((chatStorage) => {
-            console.log(chatStorage.length, "///////send/len////")
+            console.log(chatStorage)
             for (let i = 0; i < chatStorage.length; i++) {
                 //判断是否有该登录用户的记录
                 if (chatStorage[i].userId === this.user.id) {
@@ -172,7 +189,7 @@ export class Chat {
                 })
             }
             this.storage.set('chatStorage', chatStorage);
-            console.log(chatStorage.length, "///////send/len/af///")
+            console.log('chat.chatStorage------>', chatStorage)
         });
     }
     /**

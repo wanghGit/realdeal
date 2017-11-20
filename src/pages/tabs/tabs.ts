@@ -51,10 +51,12 @@ export class TabsPage {
       }
     })
   }
+
   chatListsubscribe(user) {
     this.realtime.createIMClient(user.id.toString()).then((Jerry) => {
       Jerry.on('message', (message, conversation) => {
-        console.log('//////////message///tab//', message)
+        console.log('tabs received: ', message);
+        if (user.id.toString() === message.from) console.log('自己收到自己的消息，不存'); return;
         //该登录用户是否有聊天记录
         let userNotExist = true;
         //是否和该用户有聊天记录
@@ -69,7 +71,8 @@ export class TabsPage {
               for (let j = 0; j < chatStorage[i].info.length; j++) {
                 if (chatStorage[i].info[j].toUser.id === message.from) {
                   chatStorage[i].info[j].record.push({
-                    msg: message.text
+                    message: message.text,
+                    userId: message.from
                   })
                   toUserNotExist = false;
                 }
@@ -93,6 +96,7 @@ export class TabsPage {
             })
           }
           this.storage.set('chatStorage', chatStorage);
+          console.log('tabs.chatStorage------>', chatStorage)
           this.events.publish('chatList', chatStorage);
         });
       });
