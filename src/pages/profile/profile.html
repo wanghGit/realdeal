@@ -39,35 +39,35 @@
         </ion-grid>
       </button>
     </ng-template>
-
-    <button ion-item *ngIf="isLogin">
-      我的关注
-    </button>
-    <button ion-item *ngIf="isLogin" (click)="answer()">
-      我的回答
-    </button>
     <button *ngIf="isLogin" ion-item>
-      我的分币
+      余额
       <div float-right>
         100
       </div>
     </button>
+    <button ion-item *ngIf="isLogin" [navPush]="'ProfileFollowPage'">
+      我的关注
+    </button>
+    <button ion-item *ngIf="isLogin" [navPush]="'ProfileAnswerPage'">
+      我的回答
+    </button>
+    <button *ngIf="isLogin" [navPush]="'ProfileApplyAnswerPage'" ion-item>
+      申请答主
+    </button>
     <button *ngIf="isLogin" ion-item (click)="clearCache()">
       清除缓存
     </button>
-    <button ion-item (click)="help()">
+    <button ion-item [navPush]="'ProfileHelpPage'">
       帮助
     </button>
-    <button *ngIf="isLogin" ion-item (click)="settings()">
+    <button *ngIf="isLogin" [navPush]="'ProfileSettingsPage'" ion-item>
       设置
     </button>
-    <button ion-item>
+    <!-- <button ion-item>
       在线客服
     </button>
-    <button ion-item (click)="about()">
+    <button ion-item>
       关于
-    </button>
-
-
+    </button> -->
   </ion-list>
 </ion-content>

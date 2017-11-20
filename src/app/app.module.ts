@@ -26,6 +26,10 @@ import { OtherInfoPageModule } from '../pages/other-info/other-info.module';
 import { ProblemDetailPageModule } from '../pages/problem-detail/problem-detail.module';
 import { AccountPageModule } from '../pages/account/account.module';
 import { ProfileLabelPageModule } from '../pages/profile-label/profile-label.module';
+import { ProfileAnswerPageModule } from '../pages/profile-answer/profile-answer.module';
+import { ProfileApplyAnswerPageModule } from '../pages/profile-apply-answer/profile-apply-answer.module';
+import { ProfileFollowPageModule } from '../pages/profile-follow/profile-follow.module';
+import { ProfileHelpPageModule } from '../pages/profile-help/profile-help.module';
 
 // filter
 @NgModule({
@@ -49,6 +53,10 @@ import { ProfileLabelPageModule } from '../pages/profile-label/profile-label.mod
     ProblemDetailPageModule,
     AccountPageModule,
     ProfileLabelPageModule,
+    ProfileAnswerPageModule,
+    ProfileApplyAnswerPageModule,
+    ProfileFollowPageModule,
+    ProfileHelpPageModule,
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
