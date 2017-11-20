@@ -45,19 +45,19 @@
         100
       </div>
     </button>
-    <button ion-item *ngIf="isLogin" [navPush]="'ProfileFollowPage'">
+    <button *ngIf="isLogin" [navPush]="'ProfileFollowPage'" ion-item>
       我的关注
     </button>
-    <button ion-item *ngIf="isLogin" [navPush]="'ProfileAnswerPage'">
+    <button *ngIf="isLogin" [navPush]="'ProfileAnswerPage'" ion-item>
       我的回答
     </button>
     <button *ngIf="isLogin" [navPush]="'ProfileApplyAnswerPage'" ion-item>
       申请答主
     </button>
-    <button *ngIf="isLogin" ion-item (click)="clearCache()">
+    <button *ngIf="isLogin" (click)="clearCache()" ion-item>
       清除缓存
     </button>
-    <button ion-item [navPush]="'ProfileHelpPage'">
+    <button *ngIf="isLogin" [navPush]="'ProfileHelpPage'" ion-item>
       帮助
     </button>
     <button *ngIf="isLogin" [navPush]="'ProfileSettingsPage'" ion-item>

@@ -1,11 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavParams } from 'ionic-angular';
 import { Events, Content, TextInput } from 'ionic-angular';
-import { ChatService, ChatMessage, UserInfo } from "../../providers/chat-service";
 import { Realtime, TextMessage } from 'leancloud-realtime';
 import { TypedMessagesPlugin } from 'leancloud-realtime-plugin-typed-messages';
 import { Storage } from '@ionic/storage';
 import { NavController } from 'ionic-angular/navigation/nav-controller';
+import { ChatService } from '../../providers/chat-service';
 
 @IonicPage()
 @Component({
@@ -17,8 +17,8 @@ export class Chat {
     @ViewChild(Content) content: Content;
     @ViewChild('chat_input') messageInput: TextInput;
     msgList = [];
-    user: UserInfo;
-    toUser: UserInfo;
+    user;
+    toUser;
     editorMsg = '';
     showEmojiPicker = false;
 
@@ -80,7 +80,7 @@ export class Chat {
             this.storage.get('chatStorage').then((chatStorage) => {
                 for (let i = 0; i < this.chatStorage.length; i++) {
                     //for (let j = 0; j < this.chatStorage[i].info.length; j++) {
-                        console.log(this.chatStorage[i].userId + "///////rece/////" + this.chatStorage[i].record);
+                    console.log(this.chatStorage[i].userId + "///////rece/////" + this.chatStorage[i].record);
                     //}
                 }
                 //});
@@ -126,7 +126,7 @@ export class Chat {
         if (!this.editorMsg.trim()) return;
         // Mock message
         const id = Date.now().toString();
-        let newMsg: ChatMessage = {
+        let newMsg = {
             messageId: Date.now().toString(),
             userId: this.user.id,
             userName: this.user.id,
@@ -174,39 +174,39 @@ export class Chat {
         //获取缓存数据
         //this.storage.get('chatStorage').then((chatStorage) => {
 
-            // for (let i = 0; i < chatStorage.length; i++) {
-            //     //判断是否有该用户的记录
-            //     if (chatStorage[i].userId === this.user.id) {
-            //         chatStorage[i].info.push({
-            //             toUser: { id: this.toUser.id, name: '', head: '' },
-            //             record: { msg: newMsg.message }
-            //         })
-            //         userNotExist = false;
-            //     }
-            // }
-            if (userNotExist) {
-                this.chatStorage.push({
-                    userId: this.user.id,
-                    toUser: this.toUser.id,
-                    name: '',
-                    head: '',
-                    record: newMsg.message
-                })
-            }
-            // if (userNotExist) {
-            //     console.log('not exist----》', this.toUser)
-            //     this.chatStorage.push({
-            //         userId: this.user.id,
-            //         info: [{ toUser: { id: this.toUser.id, name: '', head: '' }, record: { msg: newMsg.message } }]
-            //     })
-            // }
+        // for (let i = 0; i < chatStorage.length; i++) {
+        //     //判断是否有该用户的记录
+        //     if (chatStorage[i].userId === this.user.id) {
+        //         chatStorage[i].info.push({
+        //             toUser: { id: this.toUser.id, name: '', head: '' },
+        //             record: { msg: newMsg.message }
+        //         })
+        //         userNotExist = false;
+        //     }
+        // }
+        if (userNotExist) {
+            this.chatStorage.push({
+                userId: this.user.id,
+                toUser: this.toUser.id,
+                name: '',
+                head: '',
+                record: newMsg.message
+            })
+        }
+        // if (userNotExist) {
+        //     console.log('not exist----》', this.toUser)
+        //     this.chatStorage.push({
+        //         userId: this.user.id,
+        //         info: [{ toUser: { id: this.toUser.id, name: '', head: '' }, record: { msg: newMsg.message } }]
+        //     })
+        // }
 
         //});
         this.storage.set('chatStorage', this.chatStorage);
         //this.storage.get('chatStorage').then((chatStorage) => {
         for (let i = 0; i < this.chatStorage.length; i++) {
             //for (let j = 0; j < this.chatStorage[i].info.length; j++) {
-                console.log(this.chatStorage[i].userId + "///////send/////" + this.chatStorage[i].record);
+            console.log(this.chatStorage[i].userId + "///////send/////" + this.chatStorage[i].record);
             //}
         }
         //});
@@ -216,7 +216,7 @@ export class Chat {
      * @name pushNewMsg
      * @param msg
      */
-    pushNewMsg(msg: ChatMessage) {
+    pushNewMsg(msg) {
         const userId = this.user.id,
             toUserId = this.toUser.id;
         // Verify user relationships

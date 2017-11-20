@@ -4,8 +4,8 @@ import { IonicPage, NavController, NavParams, ToastController, Events, } from 'i
 //import { NavController, ToastController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { LoginService } from './login.service';
 import { Storage } from '@ionic/storage';
+import { UserService } from '../../providers/user-service';
 
 /**
  * Generated class for the LoginPage page.
@@ -26,7 +26,7 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private formBuilder: FormBuilder,
     public toastCtrl: ToastController,
-    private loginService: LoginService,
+    private userService: UserService,
     public storage: Storage,
     public events: Events, ) {
   }
@@ -44,7 +44,7 @@ export class LoginPage {
   login(user, _event) {
     console.log(user);
     _event.preventDefault();//该方法将通知 Web 浏览器不要执行与事件关联的默认动作
-    this.loginService.login(user).subscribe(data => {
+    this.userService.login(user).subscribe(data => {
       console.log(data.id + data.phone + '//////data//');
       //let userLogin=[{user:'',isLogin:''}];
       if (data.id) {

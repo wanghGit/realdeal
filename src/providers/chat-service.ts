@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response, URLSearchParams, Headers, RequestOptions } from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
 import { Events } from 'ionic-angular';
-import 'rxjs/add/operator/toPromise';
 
 export class ChatMessage {
     messageId: string;
@@ -22,9 +25,10 @@ export class UserInfo {
 
 @Injectable()
 export class ChatService {
+    HttpUrl = "http://localhost:8000";
 
     constructor(public http: Http,
-                public events: Events) {
+        public events: Events) {
     }
 
     mockNewMsg(msg) {
@@ -44,17 +48,23 @@ export class ChatService {
         }, Math.random() * 1800)
     }
 
-    // getMsgList(): Promise<ChatMessage[]> {
-    //     const msgListUrl = './assets/mock/msg-list.json';
-    //     return this.http.get(msgListUrl)
-    //     .toPromise()
-    //     .then(response => response.json().array as ChatMessage[])
-    //     .catch(err => Promise.reject(err || 'err'));
-    // }
-
+    ask(id): Observable<any> {
+        const urlSearchParams = new URLSearchParams();
+        urlSearchParams.append('id', id);
+        return this.http.post(this.HttpUrl + '/find/user', urlSearchParams)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
     sendMsg(msg: ChatMessage) {
         return new Promise(resolve => setTimeout(() => resolve(msg), Math.random() * 1000))
-        .then(() => this.mockNewMsg(msg));
+            .then(() => this.mockNewMsg(msg));
     }
 
+    extractData(res: Response) {
+        return res.text() ? res.json() : {};
+    }
+
+    handleError(error: Response | any) {
+        return Observable.throw(error);
+    }
 }

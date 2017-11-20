@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
   for more info on providers and Angular 2 DI.
 */
 @Injectable()
-export class EmojiProvider {
+export class EmojiService {
 
     constructor() {}
 

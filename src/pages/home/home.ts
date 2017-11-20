@@ -2,10 +2,10 @@ import { Component, ViewChild } from '@angular/core';
 
 import { NavParams, IonicPage, NavController, Events } from 'ionic-angular';
 import { Content, TextInput } from 'ionic-angular';
-import { HomeService, ChatMessage, UserInfo } from './home.service';
 import { Realtime, TextMessage } from 'leancloud-realtime';
 import { TypedMessagesPlugin } from 'leancloud-realtime-plugin-typed-messages';
 import { Storage } from '@ionic/storage';
+import { ChatService } from '../../providers/chat-service';
 @IonicPage()
 @Component({
   selector: 'page-home',
@@ -16,11 +16,11 @@ export class HomePage {
   @ViewChild(Content) content: Content;
   @ViewChild('chat_input') messageInput: TextInput;
   //msgList = [];
-  toUser: UserInfo = {
+  toUser = {
     id: null,
     name: null
   }
-  user: UserInfo = {
+  user = {
     id: null
   };
   editorMsg: string = '';
@@ -29,7 +29,7 @@ export class HomePage {
   realtime;
 
   constructor(public navParams: NavParams, public navCtrl: NavController,
-    public homeService: HomeService, public events: Events, public storage: Storage
+    public chatService: ChatService, public events: Events, public storage: Storage
   ) {
     this.storage.get('isLogin').then((isLogin) => {
       if (isLogin === true) {
@@ -68,8 +68,8 @@ export class HomePage {
       if (isLogin === true) {
         //this.events.publish('user:talk', this.user)
         //this.storage.set('user', { id: id })
-        this.homeService.ask(id).subscribe(toUser => {
-          //console.log(toUser)
+        this.chatService.ask(id).subscribe(toUser => {
+          console.log(toUser)
           this.toUser.id = toUser.id.toString();
           this.toUser.name = toUser.name;
           this.navCtrl.push('Chat', {

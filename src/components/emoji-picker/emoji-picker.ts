@@ -1,6 +1,6 @@
 import { Component, forwardRef } from '@angular/core';
-import { EmojiProvider } from "../../providers/emoji";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { EmojiService } from '../../providers/emoji-service';
 
 /**
  * Generated class for the EmojiPickerComponent component.
@@ -28,7 +28,7 @@ export class EmojiPickerComponent implements ControlValueAccessor {
     _onChanged: Function;
     _onTouched: Function;
 
-    constructor(emojiProvider: EmojiProvider) {
+    constructor(emojiProvider: EmojiService) {
         this.emojiArr = emojiProvider.getEmojis();
     }
 

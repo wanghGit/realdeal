@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
-import { RegisterService } from './register.service';
+import { UserService } from '../../providers/user-service';
 
 /**
  * Generated class for the RegisterPage page.
@@ -23,7 +23,7 @@ export class RegisterPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private formBuilder: FormBuilder,
     public toastCtrl: ToastController,
-    private registerService: RegisterService) {
+    private userService: UserService) {
   }
 
   registerForm = this.formBuilder.group({
@@ -33,7 +33,7 @@ export class RegisterPage {
   });
 
   register(user) {
-    this.registerService.register(user).subscribe(() => {
+    this.userService.register(user).subscribe(() => {
       alert('注册成功，前往登录页面');
       this.navCtrl.push('LoginPage');
     });

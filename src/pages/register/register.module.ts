@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { RegisterPage } from './register';
-import { RegisterService } from './register.service';
 
 @NgModule({
   declarations: [
@@ -10,6 +9,5 @@ import { RegisterService } from './register.service';
   imports: [
     IonicPageModule.forChild(RegisterPage),
   ],
-  providers: [RegisterService]
 })
 export class RegisterPageModule { }
