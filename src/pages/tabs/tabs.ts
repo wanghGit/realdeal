@@ -80,7 +80,10 @@ export class TabsPage {
               if (toUserNotExist) {
                 chatStorage[i].info.push({
                   toUser: { id: message.from, name: '', head: '' },
-                  record: [{ msg: message.text }]
+                  record: [{
+                    message: message.text,
+                    userId: message.from
+                  }]
                 })
 
               }
