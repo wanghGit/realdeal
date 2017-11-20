@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, Events, Content, TextInput } from "ionic-angular";
-import { FindPage } from '../find/find';
-import { ProfilePage } from '../profile/profile';
-import { HomePage } from '../home/home';
 
 import { Realtime, TextMessage } from 'leancloud-realtime';
 import { TypedMessagesPlugin } from 'leancloud-realtime-plugin-typed-messages';
 import { Storage } from '@ionic/storage';
+
 @IonicPage()
 @Component({
   selector: 'page-tabs',
@@ -14,9 +12,9 @@ import { Storage } from '@ionic/storage';
 })
 export class TabsPage {
 
-  tab1Root = FindPage;
-  tab2Root = HomePage;
-  tab3Root = ProfilePage;
+  tab1Root = 'FindPage';
+  tab2Root = 'HomePage';
+  tab3Root = 'ProfilePage';
 
   realtime;
   //存储聊天列表
