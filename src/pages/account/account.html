@@ -8,6 +8,11 @@
 
   <ion-navbar>
     <ion-title>账号管理</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="update()">
+        保存
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -16,16 +21,12 @@
 <ion-content>
   <ion-list>
     <button ion-item>
-      修改手机号
-      <div float-right>
-          15301150155
-        </div>
+      <ion-label color="primary" stacked>修改手机号</ion-label>
+      <ion-input [(ngModel)]="user.phone"></ion-input>
     </button>
     <button ion-item>
-      修改邮箱
-      <div float-right>
-          759345232@qq.com
-        </div>
+      <ion-label color="primary" stacked>修改邮箱</ion-label>
+      <ion-input [(ngModel)]="user.email"></ion-input>
     </button>
     <button ion-item>
       修改密码

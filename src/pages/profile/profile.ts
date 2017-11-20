@@ -21,10 +21,27 @@ export class ProfilePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter');
     this.initUser();
   }
 
+  ionViewDidLoad(){
+    console.log('ionViewDidLoad');
+  }
+  ionViewDidEnter(){
+    console.log('ionViewDidEnter');
+  }
+  ionViewWillLeave(){
+    console.log('ionViewWillLeave');
+  }
+  ionViewDidLeave(){
+    console.log('ionViewDidLeave');
+  }
+  ionViewWillUnload(){
+    console.log('ionViewWillUnload');
+  }
+ 
   initUser() {
     this.storage.get('user').then(user => this.user = user);
     this.storage.get('isLogin').then(isLogin => this.isLogin = isLogin

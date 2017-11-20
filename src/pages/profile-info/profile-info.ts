@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { UserService } from '../../providers/user-service';
 
 /**
  * Generated class for the ProfileInfoPage page.
@@ -19,15 +20,16 @@ export class ProfileInfoPage {
   user = {
     name: '',
     role: '',
-    label: [{ name: '语文' }, { name: '数学' }]
   };
   isLogin;
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
-    public navParams: NavParams, public storage: Storage) {
+    public navParams: NavParams,
+    public userService: UserService,
+    public storage: Storage) {
   }
 
-  ionViewDidLoad() {
+  ionViewWillLoad() {
     this.initUser();
   }
 
@@ -45,13 +47,17 @@ export class ProfileInfoPage {
     this.navCtrl.setRoot('TabsPage');
   }
 
-  save() {
-    let toast = this.toastCtrl.create({
-      message: '保存成功.',
-      duration: 2000,
-      showCloseButton: true,
-      closeButtonText: '关闭'
-    });
-    toast.present();
+  update() {
+    this.userService.updateUserNameAndRole(this.user).subscribe(()=>{
+    this.storage.set('user', this.user);
+      let toast = this.toastCtrl.create({
+        message: '保存成功.',
+        duration: 2000,
+        showCloseButton: true,
+        closeButtonText: '关闭'
+      });
+      toast.present();
+    })
+    
   }
 }

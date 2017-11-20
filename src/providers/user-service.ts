@@ -32,6 +32,26 @@ export class UserService {
             .catch(this.handleError);
     }
 
+    updateUserNameAndRole(user): Observable<any> {
+        const urlSearchParams = new URLSearchParams();
+        urlSearchParams.append('name', user.name);
+        urlSearchParams.append('role', user.role);
+        urlSearchParams.append('id', user.id);
+        return this.http.post(this.HttpUrl + '/user/updateUserNameAndRole', urlSearchParams)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    updateUserPhoneAndEmail(user): Observable<any> {
+        const urlSearchParams = new URLSearchParams();
+        urlSearchParams.append('phone', user.phone);
+        urlSearchParams.append('email', user.email);
+        urlSearchParams.append('id', user.id);
+        return this.http.post(this.HttpUrl + '/user/updateUserPhoneAndEmail', urlSearchParams)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
     extractData(res: Response) {
         return res.text() ? res.json() : {};
     }

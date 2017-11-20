@@ -9,7 +9,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 //module
-import { EmojiPickerComponentModule } from '../components/emoji-picker/emoji-picker.module';
 import { TabsPageModule } from '../pages/tabs/tabs.module';
 
 //service
@@ -31,7 +30,6 @@ import { ChatService } from '../providers/chat-service';
     IonicStorageModule.forRoot(),
     // custom module
     TabsPageModule,
-    EmojiPickerComponentModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -41,6 +39,7 @@ import { ChatService } from '../providers/chat-service';
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
+    // custom service
     EmojiService,
     UserService,
     ChatService
