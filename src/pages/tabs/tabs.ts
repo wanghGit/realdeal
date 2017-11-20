@@ -42,74 +42,58 @@ export class TabsPage {
     this.storage.get('user').then((user) => {
       if (user.id) {
         // 创建 createIMClient
+        this.chatListsubscribe(user);
       } else {
         this.events.subscribe('user:login', (user) => {
-          // 创建 createIMClient
+          //创建 createIMClient
+          this.chatListsubscribe(user);
         });
       }
     })
   }
-
-  // subscribe(user) {
-  //   console.log('subscribe', user.id)
-  //   let userNotExist = true;
-  //   this.realtime.createIMClient(user.id).then((Jerry) => {
-  //     Jerry.on('message', (message, conversation) => {
-
-  //       console.log('Message received/////: ', message);
-  //       this.storage.get('chatStorage').then((chatStorage) => {
-  //         for (let i = 0; i < chatStorage.length; i++) {
-  //           //判断是否有该用户的记录
-  //           if (chatStorage[i].userId === user.id) {
-  //             chatStorage[i].info.push({
-  //               toUser: { id: message.from, name: '', head: '' },
-  //               record: message.text
-  //             })
-  //             userNotExist = false;
-  //           }
-  //         }
-  //         if (userNotExist) {
-  //           chatStorage.push({
-  //             userId: user.id,
-  //             info: [{ toUser: { id: message.from, name: '', head: '' }, record: [message.text] }]
-  //           })
-  //         }
-  //         //this.storage.set('chatStorage', chatStorage);
-  //         console.log('chatStorage-----rec---->');
-  //         console.log(chatStorage);
-  //         this.events.publish('chatReco', chatStorage);
-  //       });
-
-  //     });
-  //   }).catch(console.error);
-  // }
   chatListsubscribe(user) {
     this.realtime.createIMClient(user.id.toString()).then((Jerry) => {
       Jerry.on('message', (message, conversation) => {
+        console.log('//////////message///tab//', message)
+        //该登录用户是否有聊天记录
+        let userNotExist = true;
+        //是否和该用户有聊天记录
+        let toUserNotExist = true;
+        //获取缓存数据
         this.storage.get('chatStorage').then((chatStorage) => {
-          //console.log(chatStorage.length+'/////chatListsubscribe/len////: '+user.id);
-          // for (let i = 0; i < chatStorage.length; i++) {
-          //   //判断是否有当前用户的
-          //   if (chatStorage[i].userId === user.id) {
-          //     //console.log(chatStorage[i].userId+'/////chatListsubscribe/////: '+user.id);
-          //     for (let j = 0; j < chatStorage[i].info.length; j++) {
-          //       //console.log(chatStorage[i].info[j].record+'/////info len/////: '+user.id);
-          //       this.chatList.push({
-          //         userName: chatStorage[i].userId,
-          //         message: chatStorage[i].info[j].record,
-          //         messageId: Date.now().toString(),
-          //         userId: chatStorage[i].userId,
-          //         toUserId: chatStorage[i].info[j].toUser.id,
-          //       })
-          //     }
-          //   }
-          // }
-          //console.log(this.chatList[i].message+'/////chatLislen/////: '+this.chatList[i].userName);
           for (let i = 0; i < chatStorage.length; i++) {
-            console.log(chatStorage[i].userId + '///tabs msg//' + chatStorage[i].record)
-          }
-          this.events.publish('chatList', chatStorage);
+            //判断是否有该登录用户的记录
+            if (chatStorage[i].userId === user.id) {
+              console.log('exist--tab--》', user)
+              //判断是否有和该用户的聊天记录
+              for (let j = 0; j < chatStorage[i].info.length; j++) {
+                if (chatStorage[i].info[j].toUser.id === message.from) {
+                  chatStorage[i].info[j].record.push({
+                    msg: message.text
+                  })
+                  toUserNotExist = false;
+                }
+              }
+              if (toUserNotExist) {
+                chatStorage[i].info.push({
+                  toUser: { id: message.from, name: '', head: '' },
+                  record: [{ msg: message.text }]
+                })
 
+              }
+              userNotExist = false;
+            }
+          }
+          //没有该登录用户的聊天记录
+          if (userNotExist) {
+            console.log('not exist--tab--》', user)
+            chatStorage.push({
+              userId: user.id,
+              info: [{ toUser: { id: message.from, name: '', head: '' }, record: [{ msg: message.text }] }]
+            })
+          }
+          this.storage.set('chatStorage', chatStorage);
+          this.events.publish('chatList', chatStorage);
         });
       });
     }).catch(console.error);
