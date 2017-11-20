@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController , Events, } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, Events, } from 'ionic-angular';
 //import { Component } from '@angular/core';
 //import { NavController, ToastController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -28,7 +28,7 @@ export class LoginPage {
     public toastCtrl: ToastController,
     private loginService: LoginService,
     public storage: Storage,
-    public events: Events,) {
+    public events: Events, ) {
   }
 
   loginForm = this.formBuilder.group({
@@ -45,12 +45,13 @@ export class LoginPage {
     console.log(user);
     _event.preventDefault();//该方法将通知 Web 浏览器不要执行与事件关联的默认动作
     this.loginService.login(user).subscribe(data => {
-      console.log(data.id+data.phone+'//////data//');
+      console.log(data.id + data.phone + '//////data//');
       //let userLogin=[{user:'',isLogin:''}];
       if (data.id) {
         this.navCtrl.setRoot('TabsPage');
         this.storage.set('user', data);
         this.storage.set('isLogin', true);
+        this.events.publish('user:login');
       }
       else {
         let toast = this.toastCtrl.create({

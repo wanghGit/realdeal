@@ -24,6 +24,8 @@ import { FindSearchPageModule } from '../pages/find-search/find-search.module';
 import { ProfileInfoPageModule } from '../pages/profile-info/profile-info.module';
 import { OtherInfoPageModule } from '../pages/other-info/other-info.module';
 import { ProblemDetailPageModule } from '../pages/problem-detail/problem-detail.module';
+import { AccountPageModule } from '../pages/account/account.module';
+import { ProfileLabelPageModule } from '../pages/profile-label/profile-label.module';
 
 // filter
 @NgModule({
@@ -45,6 +47,8 @@ import { ProblemDetailPageModule } from '../pages/problem-detail/problem-detail.
     ProfileInfoPageModule,
     OtherInfoPageModule,
     ProblemDetailPageModule,
+    AccountPageModule,
+    ProfileLabelPageModule,
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],

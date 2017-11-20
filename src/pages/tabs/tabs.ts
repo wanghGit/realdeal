@@ -31,7 +31,7 @@ export class TabsPage {
     });
 
     //this.createUserChat();
-    this.createUserChatList();
+    this.listenChat();
     //this.chatListFirst();
   }
 
@@ -40,9 +40,16 @@ export class TabsPage {
   //   this.events.subscribe('user:talk', (user) => this.subscribe(user));
 
   // }
-  createUserChatList() {
-    console.log('chatListsubscribe/////')
-    this.events.subscribe('user:login', (user) => this.chatListsubscribe(user));
+  listenChat() {
+    this.storage.get('user').then((user) => {
+      if (user.id) {
+        // 创建 createIMClient
+      } else {
+        this.events.subscribe('user:login', (user) => {
+          // 创建 createIMClient
+        });
+      }
+    })
   }
 
   // subscribe(user) {
@@ -102,9 +109,9 @@ export class TabsPage {
           //console.log(this.chatList[i].message+'/////chatLislen/////: '+this.chatList[i].userName);
           for (let i = 0; i < chatStorage.length; i++) {
             console.log(chatStorage[i].userId + '///tabs msg//' + chatStorage[i].record)
-        }
+          }
           this.events.publish('chatList', chatStorage);
-          
+
         });
       });
     }).catch(console.error);

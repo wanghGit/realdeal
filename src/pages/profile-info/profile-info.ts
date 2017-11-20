@@ -19,6 +19,7 @@ export class ProfileInfoPage {
   user = {
     name: '',
     role: '',
+    label: [{ name: '语文' }, { name: '数学' }]
   };
   isLogin;
   constructor(public navCtrl: NavController,
@@ -32,7 +33,7 @@ export class ProfileInfoPage {
 
   initUser() {
     this.storage.get('user').then(user => {
-      this.user = user
+      this.user = { ...this.user, ...user }
     });
     this.storage.get('isLogin').then(isLogin => this.isLogin = isLogin);
   }
