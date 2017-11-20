@@ -15,6 +15,7 @@ import { TabsPageModule } from '../pages/tabs/tabs.module';
 import { UserService } from '../providers/user-service';
 import { EmojiService } from '../providers/emoji-service';
 import { ChatService } from '../providers/chat-service';
+import { ProblemService } from '../providers/problem-service';
 
 // filter
 
@@ -42,7 +43,8 @@ import { ChatService } from '../providers/chat-service';
     // custom service
     EmojiService,
     UserService,
-    ChatService
+    ChatService,
+    ProblemService
   ]
 })
 export class AppModule { }
