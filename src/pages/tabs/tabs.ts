@@ -68,7 +68,7 @@ export class TabsPage {
         let newMsg = {
           messageId: Date.now().toString(),
           userId: user.id,
-          userName: message.userName,
+          userName: user.id,
           userAvatar: message.avatar,
           toUserId: message.from,
           time: Date.now(),
@@ -76,7 +76,7 @@ export class TabsPage {
           status: 'pending'
         };
         console.log('tabs-user-接受消息格式化-newMsg-->', newMsg);
-        this.chatService.storeChat(newMsg);
+        this.chatService.storeChatRec(newMsg);
         //this.storage.get('chatStorage').then((chatStorage) => {
         // this.events.publish('chatList', chatStorage);
         //});
