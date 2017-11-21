@@ -28,7 +28,7 @@ export class UserInfo {
 export class ChatService {
     HttpUrl = "http://localhost:8000";
 
-    constructor(public http: Http,public storage: Storage,
+    constructor(public http: Http, public storage: Storage,
         public events: Events) {
     }
 
@@ -76,15 +76,17 @@ export class ChatService {
         let toUserNotExist = true;
         console.log(newMsg.message + 'newMg')
         //获取缓存数据
+        console.log('chat--send--聊天发送消息------>', newMsg)
         this.storage.get('chatStorage').then((chatStorage) => {
             console.log(chatStorage)
             for (let i = 0; i < chatStorage.length; i++) {
                 //判断是否有该登录用户的记录
                 if (chatStorage[i].userId === newMsg.userId) {
-                    console.log('exist----》', newMsg)
+                    console.log('user-record-exist----》', newMsg)
                     //判断是否有和该用户的聊天记录
                     for (let j = 0; j < chatStorage[i].info.length; j++) {
                         if (chatStorage[i].info[j].toUser.id === newMsg.toUserId) {
+                            console.log('touser-record-exist----》', newMsg)
                             chatStorage[i].info[j].record.push({
                                 userId: newMsg.userId,
                                 msg: newMsg.message
@@ -93,6 +95,7 @@ export class ChatService {
                         }
                     }
                     if (toUserNotExist) {
+                        console.log('touser-record-notexist----》', newMsg)
                         chatStorage[i].info.push({
                             toUser: { id: newMsg.toUserId, name: '', head: '' },
                             record: [{ userId: newMsg.userId, msg: newMsg.message }]
@@ -104,15 +107,15 @@ export class ChatService {
             }
             //没有该登录用户的聊天记录
             if (userNotExist) {
-                console.log('not exist----》', newMsg)
+                console.log('user-record-notexist----》', newMsg)
                 chatStorage.push({
                     userId: newMsg.userId,
                     info: [{ toUser: { id: newMsg.toUserId, name: '', head: '' }, record: [{ userId: newMsg.userId, msg: newMsg.message }] }]
                 })
             }
             this.storage.set('chatStorage', chatStorage);
-            console.log('chat--send--chatStorage------>', chatStorage)
-            return chatStorage;
+            console.log('chat--send--chatStorage---存储聊天缓存--->', chatStorage)
+            
         });
     }
 }

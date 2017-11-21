@@ -21,7 +21,7 @@ export class TabsPage {
   //存储聊天列表
   chatList = [];
 
-  constructor(public events: Events, public storage: Storage,public chatService: ChatService ) {
+  constructor(public events: Events, public storage: Storage, public chatService: ChatService) {
     // if()
     // 初始化实时通讯 SDK
     this.realtime = new Realtime({
@@ -56,22 +56,31 @@ export class TabsPage {
   chatListsubscribe(user) {
     this.realtime.createIMClient(user.id.toString()).then((Jerry) => {
       Jerry.on('message', (message, conversation) => {
-        console.log('tabs--received---message-->: ', message);
-        if (user.id.toString() === message.from) 
-        return;
+        // user.id.toString().on('unreadmessagescountupdate', function(conversations) {
+        //   for(let conv of conversations) {
+        //     console.log('未读消息监听--》',conv.id, conv.name, conv.unreadMessagesCount);
+        //   }
+        // });
+        console.log('tabs-user-用户接受消息-message-->', message);
+        console.log('tabs-user-接受消息id-userId-->', user.id);
+        if (user.id.toString() === message.from)
+          return;
         let newMsg = {
           messageId: Date.now().toString(),
-          userId: message.from,
+          userId: user.id,
           userName: message.userName,
           userAvatar: message.avatar,
           toUserId: message.from,
           time: Date.now(),
           message: message.text,
           status: 'pending'
-      };
-      console.log('tabs--received---newMsg-->: ', newMsg);
-      this.events.publish('chatList',  this.chatService.storeChat(newMsg));
-       });
+        };
+        console.log('tabs-user-接受消息格式化-newMsg-->', newMsg);
+        this.chatService.storeChat(newMsg);
+        //this.storage.get('chatStorage').then((chatStorage) => {
+        // this.events.publish('chatList', chatStorage);
+        //});
+      });
     }).catch(console.error);
   }
 }

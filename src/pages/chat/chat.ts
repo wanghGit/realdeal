@@ -37,22 +37,7 @@ export class Chat {
     ionViewWillEnter() {
         //获取缓存数据
         this.storage.get('user').then(user => {
-            this.user = user;
-            this.realtime.createIMClient(this.user.id.toString()).then((Jerry) => {
-                Jerry.on('message', (message, conversation) => {
-                    console.log('chat received: ', message);
-                    this.msgList.push({
-                        userName: message.from,
-                        message: message.text,
-                        messageId: Date.now().toString(),
-                        userId: message.from,
-                    })
-                    console.log(this.msgList);
-                });
-            }).catch(console.error);
-
             this.storage.get('chatStorage').then((chatStorage) => {
-                console.log('chat ------>', chatStorage)
                 for (let i = 0; i < chatStorage.length; i++) {
                     if (chatStorage[i].userId === user.id) {
                         for (let j = 0; j < chatStorage[i].info.length; j++) {
@@ -80,12 +65,23 @@ export class Chat {
         public navCtrl: NavController
     ) {
         this.toUser = navParams.get('toUser');
+        this.user = navParams.get('user');
         // 初始化实时通讯 SDK
         this.realtime = new Realtime({
             appId: 'tfaMh3UmNXSphGOeLMjFYfmi-gzGzoHsz',
             plugins: [TypedMessagesPlugin], // 注册富媒体消息插件
         });
-
+        this.realtime.createIMClient(this.user.id.toString()).then((Jerry) => {
+            Jerry.on('message', (message, conversation) => {
+                this.msgList.push({
+                    userName: message.from,
+                    message: message.text,
+                    messageId: Date.now().toString(),
+                    userId: message.from,
+                })
+                console.log(this.msgList);
+            });
+        }).catch(console.error);
     }
 
     onFocus() {
