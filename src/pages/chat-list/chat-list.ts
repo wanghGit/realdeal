@@ -66,7 +66,7 @@ export class ChatListPage {
   }
 
   gotoChat(c) {
-    console.log(c);
+    console.log('chalist--to--chat-->',c);
     this.navCtrl.push('Chat', { toUser: c.toUser });
   }
 }
