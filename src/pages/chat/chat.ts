@@ -38,30 +38,20 @@ export class Chat {
         //获取缓存数据
         this.storage.get('user').then(user => {
             this.user = user;
-            this.realtime.createIMClient(this.user.id.toString()).then((Jerry) => {
-                Jerry.on('message', (message, conversation) => {
-                    console.log('chat received: ', message);
-                    this.msgList.push({
-                        userName: message.from,
-                        message: message.text,
-                        messageId: Date.now().toString(),
-                        userId: message.from,
-                    })
-                    console.log(this.msgList);
-                });
-            }).catch(console.error);
-
             this.storage.get('chatStorage').then((chatStorage) => {
-                console.log('chat ------>', chatStorage)
+                console.log('chat---加载聊天记录-->', chatStorage);
                 for (let i = 0; i < chatStorage.length; i++) {
                     if (chatStorage[i].userId === user.id) {
                         for (let j = 0; j < chatStorage[i].info.length; j++) {
-                            for (let k = 0; k < chatStorage[i].info[j].record.length; k++) {
-                                this.msgList.push({
-                                    userName: 'lqh',
-                                    message: chatStorage[i].info[j].record[k].message,
-                                    userId: chatStorage[i].info[j].record[k].userId
-                                })
+                            if (chatStorage[i].info[j].toUser.id === this.toUser.id) {
+                                for (let k = 0; k < chatStorage[i].info[j].record.length; k++) {
+                                    this.msgList.push({
+                                        userName: chatStorage[i].info[j].record[k].userId,
+                                        message: chatStorage[i].info[j].record[k].msg,
+                                        messageId: Date.now().toString(),
+                                        userId: chatStorage[i].info[j].record[k].userId
+                                    })
+                                }
                             }
                         }
                     }
@@ -77,12 +67,33 @@ export class Chat {
         public navCtrl: NavController
     ) {
         this.toUser = navParams.get('toUser');
+
+        //this.user = navParams.get('user');
         // 初始化实时通讯 SDK
         this.realtime = new Realtime({
             appId: 'tfaMh3UmNXSphGOeLMjFYfmi-gzGzoHsz',
             plugins: [TypedMessagesPlugin], // 注册富媒体消息插件
+            pushOfflineMessages: true,
         });
-
+        this.storage.get('user').then(user => {
+            this.user = user;
+            this.realtime.createIMClient(this.user.id.toString()).then((Jerry) => {
+                Jerry.on('message', (message, conversation) => {
+                    // Jerry.on('unreadmessagescountupdate', function(conversations) {
+                    //     for(let conv of conversations) {
+                    //       console.log('未读消息监听--》',conv.id, conv.name, conv.unreadMessagesCount);
+                    //     }
+                    //   });
+                    this.msgList.push({
+                        userName: message.from,
+                        message: message.text,
+                        messageId: Date.now().toString(),
+                        userId: message.from,
+                    })
+                    console.log(this.msgList);
+                });
+            }).catch(console.error);
+        });
     }
 
     onFocus() {
@@ -144,53 +155,8 @@ export class Chat {
         }).then((message) => {
             console.log('lqh & wh', '发送成功！');
             this.editorMsg = '';
-            this.storeChat(newMsg);
+            this.chatService.storeChat(newMsg);
         }).catch(console.error);
-    }
-
-    storeChat(newMsg) {
-        //该登录用户是否有聊天记录
-        let userNotExist = true;
-        //是否和该用户有聊天记录
-        let toUserNotExist = true;
-        console.log(newMsg.message + 'newMg')
-        //获取缓存数据
-        this.storage.get('chatStorage').then((chatStorage) => {
-            console.log(chatStorage)
-            for (let i = 0; i < chatStorage.length; i++) {
-                //判断是否有该登录用户的记录
-                if (chatStorage[i].userId === this.user.id) {
-                    console.log('exist----》', this.user)
-                    //判断是否有和该用户的聊天记录
-                    for (let j = 0; j < chatStorage[i].info.length; j++) {
-                        if (chatStorage[i].info[j].toUser.id === this.toUser.id) {
-                            chatStorage[i].info[j].record.push({
-                                msg: newMsg.message
-                            })
-                            toUserNotExist = false;
-                        }
-                    }
-                    if (toUserNotExist) {
-                        chatStorage[i].info.push({
-                            toUser: { id: this.toUser.id, name: '', head: '' },
-                            record: [{ msg: newMsg.message }]
-                        })
-
-                    }
-                    userNotExist = false;
-                }
-            }
-            //没有该登录用户的聊天记录
-            if (userNotExist) {
-                console.log('not exist----》', this.user)
-                chatStorage.push({
-                    userId: this.user.id,
-                    info: [{ toUser: { id: this.toUser.id, name: '', head: '' }, record: [{ msg: newMsg.message }] }]
-                })
-            }
-            this.storage.set('chatStorage', chatStorage);
-            console.log('chat.chatStorage------>', chatStorage)
-        });
     }
     /**
      * @name pushNewMsg

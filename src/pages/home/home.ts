@@ -41,7 +41,7 @@ export class HomePage {
         // });
       }
     });
-    
+
     //初始化实时通讯 SDK
     // this.realtime = new Realtime({
     //   appId: 'tfaMh3UmNXSphGOeLMjFYfmi-gzGzoHsz',
@@ -62,19 +62,21 @@ export class HomePage {
   }
 
   ask(id) {
-    this.user.id = this.editorMsg;
+    //this.user.id = this.editorMsg;
     //this.events.publish('user:login',this.user)
     this.storage.get('isLogin').then((isLogin) => {
       if (isLogin === true) {
-        //this.events.publish('user:talk', this.user)
-        //this.storage.set('user', { id: id })
-        this.chatService.ask(id).subscribe(toUser => {
-          console.log(toUser)
-          this.toUser.id = toUser.id.toString();
-          this.toUser.name = toUser.name;
-          this.navCtrl.push('Chat', {
-            user: this.user,
-            toUser: this.toUser
+        this.storage.get('user').then(user => {
+          console.log('当前登录用户-->',user);
+          this.user = user;
+          this.chatService.ask(id).subscribe(toUser => {
+            console.log('当前聊天用户-->',toUser);
+            this.toUser.id = toUser.id.toString();
+            this.toUser.name = toUser.name;
+            this.navCtrl.push('Chat', {
+              user: this.user,
+              toUser: this.toUser
+            })
           })
         })
       }
