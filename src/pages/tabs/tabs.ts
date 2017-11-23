@@ -27,18 +27,12 @@ export class TabsPage {
     this.realtime = new Realtime({
       appId: 'tfaMh3UmNXSphGOeLMjFYfmi-gzGzoHsz',
       plugins: [TypedMessagesPlugin], // 注册富媒体消息插件
+      pushOfflineMessages: true,
     });
 
-    //this.createUserChat();
     this.listenChat();
-    //this.chatListFirst();
   }
 
-  // createUserChat() {
-  //   console.log('subscribe')
-  //   this.events.subscribe('user:talk', (user) => this.subscribe(user));
-
-  // }
   listenChat() {
     this.storage.get('user').then((user) => {
       if (user.id) {
@@ -56,7 +50,7 @@ export class TabsPage {
   chatListsubscribe(user) {
     this.realtime.createIMClient(user.id.toString()).then((Jerry) => {
       Jerry.on('message', (message, conversation) => {
-        // user.id.toString().on('unreadmessagescountupdate', function(conversations) {
+        // user.id.on('unreadmessagescountupdate', function(conversations) {
         //   for(let conv of conversations) {
         //     console.log('未读消息监听--》',conv.id, conv.name, conv.unreadMessagesCount);
         //   }
