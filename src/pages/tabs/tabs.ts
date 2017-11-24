@@ -25,12 +25,8 @@ export class TabsPage {
   realtime;
   //存储聊天列表
   chatList = [];
-<<<<<<< Updated upstream
 
   constructor(public events: Events, public navParams: NavParams, public storage: Storage, public chatService: ChatService) {
-=======
-  constructor(public events: Events, public storage: Storage, public chatService: ChatService) {
->>>>>>> Stashed changes
     // if()
     // 初始化实时通讯 SDK
     this.realtime = new Realtime({
@@ -38,12 +34,16 @@ export class TabsPage {
       plugins: [TypedMessagesPlugin], // 注册富媒体消息插件
       pushOfflineMessages: true,
     });
-    if (navParams.get('selectedTab')) {
-      this.tabRef.select(navParams.get('selectedTab'));
+
+    this.listenChat();
+  }
+
+  ionViewDidEnter() {
+    if (this.navParams.get('selectedTab')) {
+      this.tabRef.select(this.navParams.get('selectedTab'));
     } else {
       this.tabRef.select(1);
     }
-    this.listenChat();
   }
 
   listenChat() {

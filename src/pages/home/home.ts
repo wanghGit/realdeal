@@ -27,7 +27,7 @@ export class HomePage {
   showEmojiPicker = false;
 
   realtime;
-  unReadMessageCount=10;
+  unReadMessageCount=0;
   constructor(public navParams: NavParams, public navCtrl: NavController,
     public chatService: ChatService, public events: Events, public storage: Storage
   ) {
