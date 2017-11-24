@@ -34,7 +34,9 @@ export class HomePage {
   ask(id) {
     this.storage.get('isLogin').then((isLogin) => {
       if (isLogin === true) {
-        let popover = this.popoverCtrl.create('ProblemPayPage', { id: id });
+        let popover = this.popoverCtrl.create('ProblemPayPage', { id: id }, {
+          showBackdrop: true, enableBackdropDismiss: false
+        });
         popover.present();
       }
       else {
