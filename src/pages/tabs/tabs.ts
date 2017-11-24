@@ -25,12 +25,8 @@ export class TabsPage {
   realtime;
   //存储聊天列表
   chatList = [];
-<<<<<<< Updated upstream
 
   constructor(public events: Events, public navParams: NavParams, public storage: Storage, public chatService: ChatService) {
-=======
-  constructor(public events: Events, public storage: Storage, public chatService: ChatService) {
->>>>>>> Stashed changes
     // if()
     // 初始化实时通讯 SDK
     this.realtime = new Realtime({
