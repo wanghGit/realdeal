@@ -13,7 +13,8 @@ import { ChatService } from '../../providers/chat-service';
     templateUrl: 'chat.html',
 })
 export class Chat {
-
+    APP_ID = 'QQdjhY28We5l3D2S9yTCqrK2-gzGzoHsz';
+    APP_KEY = 'Ma3TcoycEMGwiPG2LYX5o1Eg';
     @ViewChild(Content) content: Content;
     @ViewChild('chat_input') messageInput: TextInput;
     msgList = [];
@@ -71,7 +72,7 @@ export class Chat {
         //this.user = navParams.get('user');
         // 初始化实时通讯 SDK
         this.realtime = new Realtime({
-            appId: 'tfaMh3UmNXSphGOeLMjFYfmi-gzGzoHsz',
+            appId: this.APP_ID,
             plugins: [TypedMessagesPlugin], // 注册富媒体消息插件
             pushOfflineMessages: true,
         });

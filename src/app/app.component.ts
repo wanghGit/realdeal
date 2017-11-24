@@ -10,12 +10,13 @@ import { TabsPage } from '../pages/tabs/tabs';
 })
 export class MyApp {
   rootPage: any = TabsPage;
-
+   APP_ID = 'QQdjhY28We5l3D2S9yTCqrK2-gzGzoHsz';
+   APP_KEY = 'Ma3TcoycEMGwiPG2LYX5o1Eg';
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     // 初始化存储 SDK
     AV.init({
-      appId: 'tfaMh3UmNXSphGOeLMjFYfmi-gzGzoHsz',
-      appKey: 'giPJrPF8iNVSnwMSIC3MgINc',
+      appId: this.APP_ID,
+      appKey:this.APP_KEY,
     });
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.

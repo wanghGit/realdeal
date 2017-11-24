@@ -48,7 +48,7 @@ export class LoginPage {
       console.log(data.id + data.phone + '//////data//');
       //let userLogin=[{user:'',isLogin:''}];
       if (data.id) {
-        this.navCtrl.setRoot('TabsPage');
+        this.navCtrl.setRoot('TabsPage', { selectedTab: 1 });
         this.storage.set('user', data);
         this.storage.set('isLogin', true);
         this.events.publish('user:login');

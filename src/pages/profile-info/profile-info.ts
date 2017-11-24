@@ -44,12 +44,12 @@ export class ProfileInfoPage {
     this.storage.set('user', {});
     this.storage.set('isLogin', false);
     this.initUser();
-    this.navCtrl.setRoot('TabsPage');
+    this.navCtrl.setRoot('TabsPage', { selectedTab: 1 });
   }
 
   update() {
-    this.userService.updateUserNameAndRole(this.user).subscribe(()=>{
-    this.storage.set('user', this.user);
+    this.userService.updateUserNameAndRole(this.user).subscribe(() => {
+      this.storage.set('user', this.user);
       let toast = this.toastCtrl.create({
         message: '保存成功.',
         duration: 2000,
@@ -58,6 +58,6 @@ export class ProfileInfoPage {
       });
       toast.present();
     })
-    
+
   }
 }
