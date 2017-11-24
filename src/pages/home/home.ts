@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { NavParams, IonicPage, NavController, Events } from 'ionic-angular';
+import { NavParams, IonicPage, NavController, Events, PopoverController } from 'ionic-angular';
 import { Content, TextInput } from 'ionic-angular';
 import { Realtime, TextMessage } from 'leancloud-realtime';
 import { TypedMessagesPlugin } from 'leancloud-realtime-plugin-typed-messages';
@@ -27,8 +27,9 @@ export class HomePage {
   showEmojiPicker = false;
 
   realtime;
-  unReadMessageCount=0;
+  unReadMessageCount = 0;
   constructor(public navParams: NavParams, public navCtrl: NavController,
+    public popoverCtrl: PopoverController,
     public chatService: ChatService, public events: Events, public storage: Storage
   ) {
     this.storage.get('isLogin').then((isLogin) => {
@@ -41,10 +42,10 @@ export class HomePage {
         // });
       }
     });
-  
-    this.events.subscribe('unReadMessageCount',()=>{
-      this.unReadMessageCount=this.unReadMessageCount+1;
-       console.log('this.unReadMessageCount------------------------------->',this.unReadMessageCount)
+
+    this.events.subscribe('unReadMessageCount', () => {
+      this.unReadMessageCount = this.unReadMessageCount + 1;
+      console.log('this.unReadMessageCount------------------------------->', this.unReadMessageCount)
     });
     //初始化实时通讯 SDK
     // this.realtime = new Realtime({
@@ -66,29 +67,33 @@ export class HomePage {
   }
 
   ask(id) {
+
+    let popover = this.popoverCtrl.create('ProblemPayPage', { id: id });
+    popover.present();
     //this.user.id = this.editorMsg;
     //this.events.publish('user:login',this.user)
-    this.storage.get('isLogin').then((isLogin) => {
-      if (isLogin === true) {
-        this.storage.get('user').then(user => {
-          console.log('当前登录用户-->',user);
-          this.user = user;
-          this.chatService.ask(id).subscribe(toUser => {
-            console.log('当前聊天用户-->',toUser);
-            this.toUser.id = toUser.id.toString();
-            this.toUser.name = toUser.name;
-            this.navCtrl.push('Chat', {
-              user: this.user,
-              toUser: this.toUser
-            })
-          })
-        })
-      }
-      else {
-        alert('请先登录');
-        this.navCtrl.push('LoginPage');
-      }
-    });
+
+    // this.storage.get('isLogin').then((isLogin) => {
+    //   if (isLogin === true) {
+    //     this.storage.get('user').then(user => {
+    //       console.log('当前登录用户-->', user);
+    //       this.user = user;
+    //       this.chatService.ask(id).subscribe(toUser => {
+    //         console.log('当前聊天用户-->', toUser);
+    //         this.toUser.id = toUser.id.toString();
+    //         this.toUser.name = toUser.name;
+    //         this.navCtrl.push('Chat', {
+    //           user: this.user,
+    //           toUser: this.toUser
+    //         })
+    //       })
+    //     })
+    //   }
+    //   else {
+    //     alert('请先登录');
+    //     this.navCtrl.push('LoginPage');
+    //   }
+    // });
   }
 
   onFocus() {

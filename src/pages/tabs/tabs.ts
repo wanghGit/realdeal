@@ -39,6 +39,7 @@ export class TabsPage {
   }
 
   ionViewDidEnter() {
+    console.log('----------->',this.navParams.get('selectedTab'))
     if (this.navParams.get('selectedTab')) {
       this.tabRef.select(this.navParams.get('selectedTab'));
     } else {
