@@ -34,12 +34,17 @@ export class TabsPage {
       plugins: [TypedMessagesPlugin], // 注册富媒体消息插件
       pushOfflineMessages: true,
     });
-    if (navParams.get('selectedTab')) {
-      this.tabRef.select(navParams.get('selectedTab'));
+
+    this.listenChat();
+  }
+
+  ionViewDidEnter() {
+    console.log('----------->',this.navParams.get('selectedTab'))
+    if (this.navParams.get('selectedTab')) {
+      this.tabRef.select(this.navParams.get('selectedTab'));
     } else {
       this.tabRef.select(1);
     }
-    this.listenChat();
   }
 
   listenChat() {
