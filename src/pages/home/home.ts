@@ -35,7 +35,7 @@ export class HomePage {
       if (isLogin === true) {
         this.storage.get('user').then((userInfo) => {
           //this.storage.get('user').then((user) => {
-          this.user = userInfo; console.log(this.user.id + '////user')
+          this.user = userInfo; console.log('登录用户id-->',this.user.id)
           this.events.publish('user:login', this.user);
         });
         // });
