@@ -52,6 +52,13 @@ export class UserService {
             .catch(this.handleError);
     }
 
+    getRecommendedUser(): Observable<any> {
+        const urlSearchParams = new URLSearchParams();
+        return this.http.post(this.HttpUrl + '/user/getRecommendedUser', urlSearchParams)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
     extractData(res: Response) {
         return res.text() ? res.json() : {};
     }

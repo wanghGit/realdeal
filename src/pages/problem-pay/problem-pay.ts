@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { ChatService } from '../../providers/chat-service';
 
@@ -27,6 +27,7 @@ export class ProblemPayPage {
   type = 1
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public storage: Storage,
+    public loadingCtrl: LoadingController,
     public viewCtrl: ViewController,
     public chatService: ChatService, ) {
   }
@@ -34,6 +35,7 @@ export class ProblemPayPage {
   close() {
     this.viewCtrl.dismiss();
   }
+
   confirm() {
     this.storage.get('isLogin').then((isLogin) => {
       if (isLogin === true) {
@@ -44,10 +46,28 @@ export class ProblemPayPage {
             console.log('当前聊天用户-->', toUser);
             this.toUser.id = toUser.id.toString();
             this.toUser.name = toUser.name;
-            this.navCtrl.push('Chat', {
-              user: this.user,
-              toUser: this.toUser
-            })
+
+            this.viewCtrl.dismiss();
+            let loader = this.loadingCtrl.create({
+              content: "正在支付",
+              duration: 1000
+            });
+            loader.present();
+
+            setTimeout(() => {
+              let loader = this.loadingCtrl.create({
+                content: "支付成功,正在为您寻找答主",
+                duration: 4000
+              });
+              loader.present();
+            }, 1000);
+
+            setTimeout(() => {
+              this.navCtrl.push('Chat', {
+                user: this.user,
+                toUser: this.toUser
+              })
+            }, 6000);
           })
         })
       }
