@@ -74,7 +74,6 @@ export class ChatService {
         let userNotExist = true;
         //是否和该用户有聊天记录
         let toUserNotExist = true;
-        console.log(newMsg.message + 'newMg')
         //获取缓存数据
         console.log('chat--send--聊天发送消息------>', newMsg)
         this.storage.get('chatStorage').then((chatStorage) => {
@@ -124,7 +123,6 @@ export class ChatService {
         let userNotExist = true;
         //是否和该用户有聊天记录
         let toUserNotExist = true;
-        console.log(newMsg.message + 'newMg')
         //获取缓存数据
         console.log('chat--rec--聊天消息接收------>', newMsg)
         this.storage.get('chatStorage').then((chatStorage) => {

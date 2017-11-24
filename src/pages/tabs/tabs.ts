@@ -25,8 +25,12 @@ export class TabsPage {
   realtime;
   //存储聊天列表
   chatList = [];
+<<<<<<< Updated upstream
 
   constructor(public events: Events, public navParams: NavParams, public storage: Storage, public chatService: ChatService) {
+=======
+  constructor(public events: Events, public storage: Storage, public chatService: ChatService) {
+>>>>>>> Stashed changes
     // if()
     // 初始化实时通讯 SDK
     this.realtime = new Realtime({
@@ -61,11 +65,12 @@ export class TabsPage {
   chatListsubscribe(user) {
     this.realtime.createIMClient(user.id.toString()).then((Jerry) => {
       Jerry.on('message', (message, conversation) => {
-        // user.id.on('unreadmessagescountupdate', function(conversations) {
-        //   for(let conv of conversations) {
-        //     console.log('未读消息监听--》',conv.id, conv.name, conv.unreadMessagesCount);
-        //   }
-        // });
+        Jerry.on('unreadmessagescountupdate',  (conversations)=> {
+          for (let conv of conversations) {
+            console.log('未读消息监听-->', conv.id, conv.name, conv.unreadMessagesCount);
+            this.events.publish('unReadMessageCount',conv.unreadMessagesCount)
+          }
+        });
         console.log('tabs-user-用户接受消息-message-->', message);
         console.log('tabs-user-接受消息id-userId-->', user.id);
         if (user.id.toString() === message.from)
@@ -78,7 +83,7 @@ export class TabsPage {
           toUserId: message.from,
           time: Date.now(),
           message: message.text,
-          status: 'pending'
+          status: message.status
         };
         console.log('tabs-user-接受消息格式化-newMsg-->', newMsg);
         this.chatService.storeChatRec(newMsg);
