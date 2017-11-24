@@ -67,11 +67,11 @@
                 <ion-avatar item-start>
                   <img src="../../assets/imgs/to-user.jpg">
                 </ion-avatar>
-                <h2>{{p?.name}}</h2>
+                <h4>{{p.name}}</h4>
               </ion-item>
               <ion-item>
                 <p>
-                  {{p.role}}
+                  {{p.role}}2
                 </p>
               </ion-item>
             </ion-card-title>
@@ -100,12 +100,31 @@
         <h2>{{p?.user?.name}}</h2>
       </ion-item>
       <ion-item>
-        {{p.title}}
+        {{p?.title}}
       </ion-item>
     </ion-card-title>
     <ion-card-content>
-      {{p.content|filterHanzi:50}}
+      <!-- {{p?.content|filterHanzi:50}} -->
     </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="thumbs-up"></ion-icon>
+          <div>12 Likes</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="text"></ion-icon>
+          <div>4 Comments</div>
+        </button>
+      </ion-col>
+      <ion-col center text-center>
+        <ion-note>
+          11h ago
+        </ion-note>
+      </ion-col>
+    </ion-row>
   </ion-card>
   <ion-fab right bottom>
     <button ion-fab color="primary" [navPush]="'ProblemPublishPage'">

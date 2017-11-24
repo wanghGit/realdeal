@@ -7,12 +7,34 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{user?.name}}</ion-title>
+    <ion-title>详细资料</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="../../assets/imgs/to-user.jpg">
+      </ion-avatar>
+      <h2>{{user?.name}}</h2>
+      <h3>{{user?.role}}</h3>
+    </ion-item>
+    <ion-item>
+      擅长关键字
+    </ion-item>
+    <ion-item>
+      已获得成就
+    </ion-item>
+    <ion-item>
+      他的回答
+    </ion-item>
+    <ion-item>
+      <button ion-button>
+        向他提问{{user?.price}}元
+      </button>
+    </ion-item>
+  </ion-list>
 </ion-content>

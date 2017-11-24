@@ -21,6 +21,9 @@ export class HomePage {
 
   realtime;
   unReadMessageCount = 0;
+
+  label;
+  labelList = [];
   constructor(public navParams: NavParams, public navCtrl: NavController,
     public popoverCtrl: PopoverController,
     public chatService: ChatService, public events: Events, public storage: Storage
@@ -29,6 +32,17 @@ export class HomePage {
       this.unReadMessageCount = this.unReadMessageCount + 1;
       console.log('this.unReadMessageCount------------------------------->', this.unReadMessageCount)
     });
+  }
+
+  removeLabel(index) {
+    this.labelList.splice(index, 1);
+  }
+
+  insertLabel() {
+    if (this.label.trim() != '') {
+      this.labelList.push(this.label);
+    }
+    this.label = '';
   }
 
   ask(id) {

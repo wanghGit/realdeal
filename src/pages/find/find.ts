@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { ProblemService } from '../../providers/problem-service';
+import { UserService } from '../../providers/user-service';
 
 /**
  * Generated class for the FindPage page.
@@ -21,6 +22,7 @@ export class FindPage {
   constructor(public navCtrl: NavController,
     public modalCtrl: ModalController,
     public navParams: NavParams,
+    public userService: UserService,
     public problemService: ProblemService
   ) {
   }
@@ -30,39 +32,10 @@ export class FindPage {
       this.problemList = data;
       console.log(data);
     })
-
-    this.professorList = [
-      {
-        id: 1,
-        name: '静易莫',
-        role: 'java高级工程师'
-      },
-      {
-        id: 1,
-        name: '静易莫',
-        role: 'java高级工程师'
-      },
-      {
-        id: 1,
-        name: '静易莫',
-        role: 'java高级工程师'
-      },
-      {
-        id: 1,
-        name: '静易莫',
-        role: 'java高级工程师'
-      },
-      {
-        id: 1,
-        name: '静易莫',
-        role: 'java高级工程师'
-      },
-      {
-        id: 1,
-        name: '静易莫',
-        role: 'java高级工程师'
-      },
-    ]
+    this.userService.getRecommendedUser().subscribe(data => {
+      this.professorList = data;
+      console.log(data);
+    })
   }
 
   showProfessorDetail(user) {
