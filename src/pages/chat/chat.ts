@@ -76,22 +76,26 @@ export class Chat {
             plugins: [TypedMessagesPlugin], // 注册富媒体消息插件
             pushOfflineMessages: true,
         });
+
         this.storage.get('user').then(user => {
             this.user = user;
             this.realtime.createIMClient(this.user.id.toString()).then((Jerry) => {
                 Jerry.on('message', (message, conversation) => {
-                    // Jerry.on('unreadmessagescountupdate', function(conversations) {
-                    //     for(let conv of conversations) {
-                    //       console.log('未读消息监听--》',conv.id, conv.name, conv.unreadMessagesCount);
-                    //     }
-                    //   });
                     this.msgList.push({
                         userName: message.from,
                         message: message.text,
                         messageId: Date.now().toString(),
                         userId: message.from,
                     })
-                    console.log(this.msgList);
+                    conversation.on('message', function () {
+                        console.log('未读消息监听--当前聊天消息标记已读-->');
+                        conversation.read().catch(console.error.bind(console));
+                    })
+                });
+                Jerry.on('unreadmessagescountupdate', function (conversations) {
+                    for (let conv of conversations) {
+                        console.log('未读消息监听-->', conv.id, conv.name, conv.unreadMessagesCount);
+                    }
                 });
             }).catch(console.error);
         });

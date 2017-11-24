@@ -27,7 +27,7 @@ export class HomePage {
   showEmojiPicker = false;
 
   realtime;
-
+  unReadMessageCount=10;
   constructor(public navParams: NavParams, public navCtrl: NavController,
     public chatService: ChatService, public events: Events, public storage: Storage
   ) {
@@ -41,7 +41,11 @@ export class HomePage {
         // });
       }
     });
-
+  
+    this.events.subscribe('unReadMessageCount',()=>{
+      this.unReadMessageCount=this.unReadMessageCount+1;
+       console.log('this.unReadMessageCount------------------------------->',this.unReadMessageCount)
+    });
     //初始化实时通讯 SDK
     // this.realtime = new Realtime({
     //   appId: 'tfaMh3UmNXSphGOeLMjFYfmi-gzGzoHsz',
