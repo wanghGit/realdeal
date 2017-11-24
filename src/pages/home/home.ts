@@ -27,7 +27,7 @@ export class HomePage {
   ) {
     this.events.subscribe('unReadMessageCount', () => {
       this.unReadMessageCount = this.unReadMessageCount + 1;
-      console.log('this.unReadMessageCount------------------------------->', this.unReadMessageCount)
+      //console.log('this.unReadMessageCount------------------------------->', this.unReadMessageCount)
     });
   }
 

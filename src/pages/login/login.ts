@@ -45,13 +45,13 @@ export class LoginPage {
     console.log(user);
     _event.preventDefault();//该方法将通知 Web 浏览器不要执行与事件关联的默认动作
     this.userService.login(user).subscribe(data => {
-      console.log(data.id + data.phone + '//////data//');
+      console.log('--登录用户信息-->',data);
       //let userLogin=[{user:'',isLogin:''}];
       if (data.id) {
         this.navCtrl.setRoot('TabsPage', { selectedTab: 1 });
         this.storage.set('user', data);
         this.storage.set('isLogin', true);
-        this.events.publish('user:login');
+        this.events.publish('user:login',user);
       }
       else {
         let toast = this.toastCtrl.create({

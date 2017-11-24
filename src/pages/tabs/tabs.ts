@@ -50,7 +50,7 @@ export class TabsPage {
   listenChat() {
     let ob = Observable.fromPromise(this.storage.get('user'));
     ob.subscribe((user) => {
-      console.log('user----->', user);
+      console.log('--当前登录的用户--->', user);
       if (user.id) {
         // 创建 createIMClient
         this.chatListsubscribe(user);
@@ -69,7 +69,7 @@ export class TabsPage {
         Jerry.on('unreadmessagescountupdate',  (conversations)=> {
           for (let conv of conversations) {
             console.log('未读消息监听-->', conv.id, conv.name, conv.unreadMessagesCount);
-            this.events.publish('unReadMessageCount',conv.unreadMessagesCount)
+            this.events.publish('unReadMessageCount');
           }
         });
         console.log('tabs-user-用户接受消息-message-->', message);
@@ -88,9 +88,7 @@ export class TabsPage {
         };
         console.log('tabs-user-接受消息格式化-newMsg-->', newMsg);
         this.chatService.storeChatRec(newMsg);
-        //this.storage.get('chatStorage').then((chatStorage) => {
-        // this.events.publish('chatList', chatStorage);
-        //});
+        this.events.publish('chatList');
       });
     }).catch(console.error);
   }

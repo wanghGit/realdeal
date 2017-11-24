@@ -88,13 +88,13 @@ export class Chat {
                         userId: message.from,
                     })
                     conversation.on('message', function () {
-                        console.log('未读消息监听--当前聊天消息标记已读-->');
+                        console.log('未读消息监听-chat-当前聊天消息标记已读-->');
                         conversation.read().catch(console.error.bind(console));
                     })
                 });
                 Jerry.on('unreadmessagescountupdate', function (conversations) {
                     for (let conv of conversations) {
-                        console.log('未读消息监听-->', conv.id, conv.name, conv.unreadMessagesCount);
+                        console.log('未读消息监听-chat->', conv.id, conv.name, conv.unreadMessagesCount);
                     }
                 });
             }).catch(console.error);
