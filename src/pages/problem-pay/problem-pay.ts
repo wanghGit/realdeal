@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { ChatService } from '../../providers/chat-service';
 
@@ -24,15 +24,16 @@ export class ProblemPayPage {
     id: null
   };
   price;
+  type = 1
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public storage: Storage,
+    public viewCtrl: ViewController,
     public chatService: ChatService, ) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProblemPayPage');
+  close() {
+    this.viewCtrl.dismiss();
   }
-
   confirm() {
     this.storage.get('isLogin').then((isLogin) => {
       if (isLogin === true) {
