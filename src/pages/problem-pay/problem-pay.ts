@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+import { ChatService } from '../../providers/chat-service';
 
 /**
  * Generated class for the ProblemPayPage page.
@@ -14,16 +16,44 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'problem-pay.html',
 })
 export class ProblemPayPage {
-
+  toUser = {
+    id: null,
+    name: null
+  }
+  user = {
+    id: null
+  };
   price;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    public storage: Storage,
+    public chatService: ChatService, ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProblemPayPage');
   }
 
-  confirm(){
-
+  confirm() {
+    this.storage.get('isLogin').then((isLogin) => {
+      if (isLogin === true) {
+        this.storage.get('user').then(user => {
+          console.log('当前登录用户-->', user);
+          this.user = user;
+          this.chatService.ask(this.navParams.get('id')).subscribe(toUser => {
+            console.log('当前聊天用户-->', toUser);
+            this.toUser.id = toUser.id.toString();
+            this.toUser.name = toUser.name;
+            this.navCtrl.push('Chat', {
+              user: this.user,
+              toUser: this.toUser
+            })
+          })
+        })
+      }
+      else {
+        alert('请先登录');
+        this.navCtrl.push('LoginPage');
+      }
+    });
   }
 }
